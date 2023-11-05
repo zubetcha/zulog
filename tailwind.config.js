@@ -25,16 +25,16 @@ module.exports = {
         sans: ['var(--font-SUIT)', ...fontFamily.sans],
       },
       colors: {
-        primary: colors.pink,
+        primary: colors.indigo,
         gray: colors.gray,
       },
       typography: ({ theme }) => ({
         DEFAULT: {
           css: {
             a: {
-              color: theme('colors.primary.500'),
+              color: theme('colors.primary.400'),
               '&:hover': {
-                color: `${theme('colors.primary.600')}`,
+                color: `${theme('colors.primary.500')}`,
               },
               code: { color: theme('colors.primary.400') },
             },
@@ -46,16 +46,16 @@ module.exports = {
               fontWeight: '600',
             },
             code: {
-              color: theme('colors.indigo.500'),
+              color: theme('colors.indigo.400'),
             },
           },
         },
         invert: {
           css: {
             a: {
-              color: theme('colors.primary.500'),
+              color: theme('colors.primary.400'),
               '&:hover': {
-                color: `${theme('colors.primary.400')}`,
+                color: `${theme('colors.primary.300')}`,
               },
               code: { color: theme('colors.primary.400') },
             },

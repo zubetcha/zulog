@@ -4369,7 +4369,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"contentlayer@npm:0.3.4, contentlayer@npm:^0.3.4":
+"contentlayer@npm:^0.3.4":
   version: 0.3.4
   resolution: "contentlayer@npm:0.3.4"
   dependencies:
@@ -8606,7 +8606,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-contentlayer@npm:0.3.4, next-contentlayer@npm:^0.3.4":
+"next-contentlayer@npm:^0.3.4":
   version: 0.3.4
   resolution: "next-contentlayer@npm:0.3.4"
   dependencies:
@@ -11051,7 +11051,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^6.1.0
     "@typescript-eslint/parser": ^6.1.0
     autoprefixer: ^10.4.13
-    contentlayer: 0.3.4
+    contentlayer: ^0.3.4
     cross-env: ^7.0.3
     esbuild: 0.18.11
     eslint: ^8.45.0
@@ -11064,7 +11064,7 @@ __metadata:
     image-size: 1.0.0
     lint-staged: ^13.0.0
     next: 13.5.6
-    next-contentlayer: 0.3.4
+    next-contentlayer: ^0.3.4
     next-themes: ^0.2.1
     pliny: 0.1.4
     postcss: ^8.4.24
