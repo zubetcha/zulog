@@ -1,16 +1,10 @@
 ---
-
-title: Nextj에서 Firbase Cloud Messaging 으로 웹 푸시 알림 구현하기
-category: PWA
-date: 2022-10-16
-description: 내 눈물 모아....💧 푸시 알림 구현기
-published: true
-slug: web-push-alarm-with-firebase-cloud-messaging
-tags: 
-  - PWA
-  - next
-  - FCM
-
+title: Nextj에서 푸시 알림 구현하기
+summary: Firebase Cloud Messaging 서비스를 이용해 웹 푸시 알림을 구현해 보았다.
+date: '2022-10-16'
+draft: false
+tags: ['PWA', 'FCM']
+images: []
 ---
 
 # 들어가면서
@@ -45,8 +39,8 @@ firebase 관련 함수들을 모아놓을 용도로 utils 폴더 안에 firebase
 ```jsx
 // utils/firebase.ts
 
-import { initializeApp, getApps } from "firebase/app";
-import { getMessaging } from "firebase/messaging";
+import { initializeApp, getApps } from 'firebase/app'
+import { getMessaging } from 'firebase/messaging'
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -56,14 +50,14 @@ const firebaseConfig = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-};
+}
 
 export const initFirebaseApp = () => {
-  const apps = getApps();
+  const apps = getApps()
 
   if (!apps.length) {
-    const app = initializeApp(firebaseConfig);
-    const messaging =  getMessaging(app);
+    const app = initializeApp(firebaseConfig)
+    const messaging = getMessaging(app)
   }
 }
 ```
@@ -73,10 +67,10 @@ export const initFirebaseApp = () => {
 ```jsx
 // _app.tsx
 
-import { initFirebaseApp } from "@utils/firebase";
+import { initFirebaseApp } from '@utils/firebase'
 
 useEffect(() => {
-  initFirebaseApp();
+  initFirebaseApp()
 }, [])
 ```
 
@@ -302,33 +296,36 @@ FCM용 서비스워커의 파일 이름은 firebase에서 지정한 이름인 `f
 ```jsx
 // firebase-messaging-sw.js
 
-"use strict";
+'use strict'
 
 self.__WB_DISABLE_DEV_LOGS = true
 
-importScripts("https://www.gstatic.com/firebasejs/9.5.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/9.5.0/firebase-messaging-compat.js");
+importScripts('https://www.gstatic.com/firebasejs/9.5.0/firebase-app-compat.js')
+importScripts('https://www.gstatic.com/firebasejs/9.5.0/firebase-messaging-compat.js')
 
 const firebaseApp = firebase.initializeApp({
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "...",
-  measurementId: "..."
-});
+  apiKey: '...',
+  authDomain: '...',
+  projectId: '...',
+  storageBucket: '...',
+  messagingSenderId: '...',
+  appId: '...',
+  measurementId: '...',
+})
 
 // Retrieve an instance of Firebase Messaging so that it can handle background messages.
-const isSupported = firebase.messaging.isSupported();
+const isSupported = firebase.messaging.isSupported()
 if (isSupported) {
-  const messaging = firebase.messaging();
+  const messaging = firebase.messaging()
 
   messaging.onBackgroundMessage((payload) => {
-    const { notification: { title, body }, data: { reservation } } = payload;
-    const reservationId = parseInt(reservation);
-    self.registration.showNotification(title, { body });
-  });
+    const {
+      notification: { title, body },
+      data: { reservation },
+    } = payload
+    const reservationId = parseInt(reservation)
+    self.registration.showNotification(title, { body })
+  })
 }
 ```
 
@@ -338,15 +335,16 @@ if (isSupported) {
 
 ```javascript
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/firebase-messaging-sw.js')
-  .then(function(registration) {
-		// ...
-  })
-  .catch(function(error) {
-    console.log('Service worker registration failed:', error);
-  });
+  navigator.serviceWorker
+    .register('/firebase-messaging-sw.js')
+    .then(function (registration) {
+      // ...
+    })
+    .catch(function (error) {
+      console.log('Service worker registration failed:', error)
+    })
 } else {
-  console.log('Service workers are not supported.');
+  console.log('Service workers are not supported.')
 }
 ```
 
@@ -516,16 +514,16 @@ module.exports = withPlugins(
     withPWA,
     {
       pwa: {
-        dest: "public",
+        dest: 'public',
         register: true,
         skipWaiting: true,
         runtimeCaching,
-        disable: process.env.NODE_ENV === "development",
+        disable: process.env.NODE_ENV === 'development',
       },
     },
   ],
   config
-);
+)
 ```
 
 위의 옵션 중 `disable`은 서비스 워커 생성 여부를 정할 수 있는 옵션입니다. `process.env.NODE_ENV === 'development'`로 설정되어 있으니 로컬 환경에서는 서비스 워커 등록 자체가 안 되고 있었던 것입니다. disable 옵션을 `false`로 수정한 후 다시 확인해 보았습니다.
@@ -556,33 +554,36 @@ next-pwa 옵션을 다시 찾아보았고 sw와 customWorkerDir 키워드를 찾
 ```javascript
 // worker/index.js
 
-"use strict";
+'use strict'
 
 self.__WB_DISABLE_DEV_LOGS = true
 
-importScripts("https://www.gstatic.com/firebasejs/9.5.0/firebase-app-compat.js");
-importScripts("https://www.gstatic.com/firebasejs/9.5.0/firebase-messaging-compat.js");
+importScripts('https://www.gstatic.com/firebasejs/9.5.0/firebase-app-compat.js')
+importScripts('https://www.gstatic.com/firebasejs/9.5.0/firebase-messaging-compat.js')
 
 const firebaseApp = firebase.initializeApp({
-  apiKey: "...",
-  authDomain: "...",
-  projectId: "...",
-  storageBucket: "...",
-  messagingSenderId: "...",
-  appId: "...",
-  measurementId: "..."
-});
+  apiKey: '...',
+  authDomain: '...',
+  projectId: '...',
+  storageBucket: '...',
+  messagingSenderId: '...',
+  appId: '...',
+  measurementId: '...',
+})
 
 // Retrieve an instance of Firebase Messaging so that it can handle background messages.
-const isSupported = firebase.messaging.isSupported();
+const isSupported = firebase.messaging.isSupported()
 if (isSupported) {
-  const messaging = firebase.messaging();
+  const messaging = firebase.messaging()
 
   messaging.onBackgroundMessage((payload) => {
-    const { notification: { title, body }, data: { reservation } } = payload;
-    const reservationId = parseInt(reservation);
-    self.registration.showNotification(title, { body });
-  });
+    const {
+      notification: { title, body },
+      data: { reservation },
+    } = payload
+    const reservationId = parseInt(reservation)
+    self.registration.showNotification(title, { body })
+  })
 }
 ```
 
@@ -597,17 +598,17 @@ module.exports = withPlugins(
     withPWA,
     {
       pwa: {
-        dest: "public",
+        dest: 'public',
         register: true,
         skipWaiting: true,
         runtimeCaching,
-				sw: "firebase-messaging-sw.js",
+        sw: 'firebase-messaging-sw.js',
         disable: false,
       },
     },
   ],
   config
-);
+)
 ```
 
 그리고 다시 확인해보니 빌드 시에 public 폴더에 firebase-messaging-sw.js 파일이 자동으로 생성되고, 브라우저에 서비스 워커도 잘 등록되어 있는 것을 확인할 수 있었습니다.

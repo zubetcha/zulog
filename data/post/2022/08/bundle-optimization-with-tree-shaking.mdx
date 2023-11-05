@@ -1,15 +1,10 @@
 ---
-
 title: 트리쉐이킹으로 ECharts 번들 사이즈 최적화하기
-category: Optimization
-date: 2022-08-14
-published: true
-slug: bundle-optimization-with-tree-shaking
-tags:
-  - optimization
-  - treeshaking
-  - echarts
-
+summary:
+date: '2022-08-14'
+draft: false
+tags: ['optimization', 'treeshaking', 'echarts']
+images: []
 ---
 
 # 들어가면서
@@ -38,13 +33,13 @@ tags:
 ```jsx
 // next.config.js
 
-const withBundleAnalyzer = require("@next/bundle-analyzer")({
-  enabled: process.env.ANALYZE === "true",
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
 })
 
 // ...
 
-module.exports = withBundleAnalyzer({...config});
+module.exports = withBundleAnalyzer({ ...config })
 ```
 
 ## 실행 script 추가
@@ -110,12 +105,11 @@ analyzer가 측정하는 어플리케이션의 크기는 `stats`, `parsed`, `gzi
 기존에 echarts를 사용하던 방식은 아래의 코드와 같습니다.
 
 ```jsx
-import ReactECharts from 'echarts-for-react';
-import * as echarts from 'echarts';
+import ReactECharts from 'echarts-for-react'
+import * as echarts from 'echarts'
 
 // ...
-
-<ReactECharts option={option} style={{ height: "100%", width: "100%" }} />
+;<ReactECharts option={option} style={{ height: '100%', width: '100%' }} />
 ```
 
 echarts-for-react가 react에서 echarts를 컴포넌트의 형태로 렌더링하기 위해 제공하는 ReactEcharts와 차트의 옵션을 설정하거나 메서드를 사용하기 위해서 **echarts의 모든 모듈을 import**한 코드입니다.
@@ -129,22 +123,33 @@ echarts에 트리쉐이킹을 적용하는 방법은 의외로 굉장히 간단�
 위에 있던 기존의 코드에 `트리쉐이킹`을 적용한 모습입니다.
 
 ```jsx
-import ReactEChartsCore from 'echarts-for-react/lib/core';
-import * as echarts from 'echarts/core';
-import { LineChart } from "echarts/charts";
-import { GridComponent, TooltipComponent, DataZoomInsideComponent, DataZoomSliderComponent } from "echarts/components";
-import { CanvasRenderer } from "echarts/renderers";
+import ReactEChartsCore from 'echarts-for-react/lib/core'
+import * as echarts from 'echarts/core'
+import { LineChart } from 'echarts/charts'
+import {
+  GridComponent,
+  TooltipComponent,
+  DataZoomInsideComponent,
+  DataZoomSliderComponent,
+} from 'echarts/components'
+import { CanvasRenderer } from 'echarts/renderers'
 
 // ...
-echarts.use([LineChart, CanvasRenderer, GridComponent, TooltipComponent, DataZoomInsideComponent, DataZoomSliderComponent]);
+echarts.use([
+  LineChart,
+  CanvasRenderer,
+  GridComponent,
+  TooltipComponent,
+  DataZoomInsideComponent,
+  DataZoomSliderComponent,
+])
 
 // ...
-
-<ReactEChartsCore
-	echarts={echarts}
-	option={option}
-	style={{ height: "100%", width: "100%" }}
-	ref={eChartRef}
+;<ReactEChartsCore
+  echarts={echarts}
+  option={option}
+  style={{ height: '100%', width: '100%' }}
+  ref={eChartRef}
 ></ReactEChartsCore>
 ```
 

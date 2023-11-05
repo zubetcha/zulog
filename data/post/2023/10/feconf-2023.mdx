@@ -1,12 +1,10 @@
 ---
 title: 'feconf 2023'
-category:
-date: 2023-10-21
-description:
-published: false
-slug: feconf-2023
-tags:
-  -
+summary:
+date: '2023-10-21'
+draft: true
+tags: ['conf']
+images: []
 ---
 
 ## 웹 기반 그래픽 편집기의 구조와 7가지 디자인 패턴
@@ -89,13 +87,13 @@ tags:
 
 ```javascript
 function useInventory({ userId }) {
-	const { inventory } = useUserInfo({ userId });
-	const normalItems = useNormalItems(); // blocking 발생
-	const eventItems = useEventItems(); // blocing 발생
+  const { inventory } = useUserInfo({ userId })
+  const normalItems = useNormalItems() // blocking 발생
+  const eventItems = useEventItems() // blocing 발생
 
-	return inventory.filter((item) => {
-		// ...
-	});
+  return inventory.filter((item) => {
+    // ...
+  })
 }
 ```
 
@@ -156,7 +154,7 @@ function useInventory({ userId }) {
 - hidden 속성을 HIDDEN으로 변경하면 정상적으로 동작
 
 ```jsx
-<div STYLE='background: white;' /> // OK
+<div STYLE="background: white;" /> // OK
 ```
 
 ### 유저 가이드를 이전하며
@@ -235,4 +233,4 @@ function useInventory({ userId }) {
 > Module Federaition  
 > 각각의 앱이 런타임 환경에서 번들을 로드해 사용  
 > 배포단위를 더 작게 쪼개서 런타임에 통합하는 방식
-ㅇ
+> ㅇ

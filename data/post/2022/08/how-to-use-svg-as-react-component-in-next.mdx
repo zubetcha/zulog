@@ -1,15 +1,10 @@
 ---
-
 title: Next에서 svg를 React의 컴포넌트처럼 사용하는 방법
-category: Next
-description: 🤔
-date: 2022-08-05
-published: true
-slug: how-to-use-svg-as-react-component-in-next
-tags:
-  - next
-  - react
-
+summary:
+date: '2022-08-05'
+draft: false
+tags: ['nextjs', 'react']
+images: []
 ---
 
 # 들어가면서
@@ -37,10 +32,10 @@ const config = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"],
-    });
+      use: ['@svgr/webpack'],
+    })
 
-    return config;
+    return config
   },
 }
 ```

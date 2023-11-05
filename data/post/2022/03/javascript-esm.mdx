@@ -1,15 +1,10 @@
 ---
-
 title: ES Module
-description: ESM이란 뭘까...?
-category: Javascript
-date: 2022-03-10
-published: true
-slug: javascript-esm
-tags:
-  - javascript
-  - ESM
-
+summary:
+date: '2022-03-10'
+draft: false
+tags: ['javascript', 'ESM']
+images: []
 ---
 
 # 들어가면서
@@ -133,31 +128,31 @@ node.js의 CommonJS는 export-import에서 라이브 바인딩이 아닌 **객�
 각각 내보내기
 
 ```jsx
-export const name = 'square';
+export const name = 'square'
 
 export function draw(ctx, length, x, y, color) {
-  ctx.fillStyle = color;
-  ctx.fillRect(x, y, length, length);
+  ctx.fillStyle = color
+  ctx.fillRect(x, y, length, length)
 
   return {
     length: length,
     x: x,
     y: y,
-    color: color
-  };
+    color: color,
+  }
 }
 ```
 
 묶어서 내보내기
 
 ```jsx
-export { name, draw, reportArea, reportPerimeter };
+export { name, draw, reportArea, reportPerimeter }
 ```
 
 묶어서 가져오기
 
 ```jsx
-import { name, draw, reportArea, reportPerimeter } from './modules/square.js';
+import { name, draw, reportArea, reportPerimeter } from './modules/square.js'
 ```
 
 ## Renaming
@@ -168,24 +163,23 @@ export문 renaming
 
 ```jsx
 // inside module.js
-export {
-  function1 as newFunctionName,
-  function2 as anotherNewFunctionName
-};
+export { function1 as newFunctionName, function2 as anotherNewFunctionName }
 
 // inside main.js
-import { newFunctionName, anotherNewFunctionName } from './modules/module.js';
+import { newFunctionName, anotherNewFunctionName } from './modules/module.js'
 ```
 
 import문 renaming
 
 ```jsx
 // inside module.js
-export { function1, function2 };
+export { function1, function2 }
 
 // inside main.js
-import { function1 as newFunctionName,
-         function2 as anotherNewFunctionName } from './modules/module.js';
+import {
+  function1 as newFunctionName,
+  function2 as anotherNewFunctionName,
+} from './modules/module.js'
 ```
 
 ## Module Object
@@ -210,9 +204,9 @@ etc.
 
 ```jsx
 // main.js
-import { Square } from './modules/square.js';
-import { Circle } from './modules/circle.js';
-import { Triangle } from './modules/triangle.js';
+import { Square } from './modules/square.js'
+import { Circle } from './modules/circle.js'
+import { Triangle } from './modules/triangle.js'
 ```
 
 위의 세 모듈을 하나의 shape.js 라는 임의의 상위 모듈으로 집합시켜서 한 줄로 작성할 수 있다.
@@ -220,26 +214,24 @@ import { Triangle } from './modules/triangle.js';
 structure
 
 ```jsx
-modules/
-  shapes.js
-  shapes/
-    circle.js
-    square.js
-    triangle.js
+modules / shapes.js
+shapes / circle.js
+square.js
+triangle.js
 ```
 
 example
 
 ```jsx
 // shape.js
-export { Square } from './shapes/square.js';
-export { Triangle } from './shapes/triangle.js';
-export { Circle } from './shapes/circle.js';
+export { Square } from './shapes/square.js'
+export { Triangle } from './shapes/triangle.js'
+export { Circle } from './shapes/circle.js'
 ```
 
 ```jsx
 // main.js
-import { Square, Circle, Triangle } from './modules/shapes.js';
+import { Square, Circle, Triangle } from './modules/shapes.js'
 ```
 
 주의할 점은 shape.js에서 참조되고 있는 export들은 파일을 통해 리다이렉트되는 것일 뿐 실제로는 shape.js 안에 존재하는 게 아니기 때문에 같은 파일 안에서는 유용한 코드를 작성할 수 없다는 것이다.
@@ -249,10 +241,9 @@ import { Square, Circle, Triangle } from './modules/shapes.js';
 동적 모듈 로딩을 사용하면 모든 모듈들을 최상위에서 불러오는 것이 아닌, **필요할 때만** 모듈을 동적으로 불러올 수 있다. 아래와 같이 `import()` 를 함수로 호출하여 파라미터로 `모듈 경로`를 전달하고, 모듈 객체를 사용하여 `promise`를 반환하면 해당 모듈 객체가 가지고 있는 export에 접근할 수 있다.
 
 ```jsx
-import('/modules/myModule.js')
-  .then((module) => {
-    // Do something with the module.
-  });
+import('/modules/myModule.js').then((module) => {
+  // Do something with the module.
+})
 ```
 
 ## Default export & Named export
@@ -278,11 +269,11 @@ import문은 아래와 같이 `{default as ...}` 가 기본형이지만 단축�
 ```jsx
 // 기본형
 
-import { default as randomSquare } from './modules/square.js';
+import { default as randomSquare } from './modules/square.js'
 
 // 단축형
 
-import randomSquare from './modules/square.js';
+import randomSquare from './modules/square.js'
 ```
 
 `default export`를 사용할 때는 아래의 두 가지를 유의하는 게 좋다.

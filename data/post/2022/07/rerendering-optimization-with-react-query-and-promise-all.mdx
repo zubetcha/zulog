@@ -1,16 +1,10 @@
 ---
-
 title: React-query useQuery와 Promise.all을 활용한 리렌더링 최적화
-category: React
-description: 리렌더링 최적화 그거 어떻게 하는건데…
-date: 2022-07-13
-published: true
-slug: rerendering-optimization-with-react-query-and-promise-all
-tags:
-  - react
-  - optimization
-  - react-query
-
+summary: 리렌더링 최적화 그거 어떻게 하는건데
+date: '2022-07-13'
+draft: false
+tags: ['react', 'optimization', 'react-query']
+images: []
 ---
 
 # 들어가면서
@@ -52,11 +46,11 @@ postman으로 간단하게 mock api를 만들었다.
 // api.tsx
 
 export const api = axios.create({
-    baseURL: 'your mock server url'
-});
+  baseURL: 'your mock server url',
+})
 
 export const MockAPI = () => {
-  return api.get("/api/rerender",)
+  return api.get('/api/rerender')
 }
 ```
 
@@ -67,35 +61,34 @@ export const MockAPI = () => {
 ```jsx
 const [count, setCount] = useState(0)
 
-console.log("rerender", count)
+console.log('rerender', count)
 
-const queryKey = new Array(5).fill("rerender-test").map((el, i) => [el, String(i)])
+const queryKey = new Array(5).fill('rerender-test').map((el, i) => [el, String(i)])
 const queryFn = async () => {
   try {
-    const res = await MockAPI();
-    return res.data.data;
-  }
-  catch (error) {
-    error;
+    const res = await MockAPI()
+    return res.data.data
+  } catch (error) {
+    error
   }
 }
 const queryOption = {
-  onSuccess: () => setCount(prev  => prev + 1)
+  onSuccess: () => setCount((prev) => prev + 1),
 }
 
-useQuery(queryKey[0], queryFn, {...queryOption});
-useQuery(queryKey[1], queryFn, {...queryOption});
-useQuery(queryKey[2], queryFn, {...queryOption});
-useQuery(queryKey[3], queryFn, {...queryOption});
-useQuery(queryKey[4], queryFn, {...queryOption});
+useQuery(queryKey[0], queryFn, { ...queryOption })
+useQuery(queryKey[1], queryFn, { ...queryOption })
+useQuery(queryKey[2], queryFn, { ...queryOption })
+useQuery(queryKey[3], queryFn, { ...queryOption })
+useQuery(queryKey[4], queryFn, { ...queryOption })
 
 // ...
 
 return (
   <>
-    <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <p>
-        Rerender: <span style={{ color: "blue", fontWeight: "700" }}>{count}</span>
+        Rerender: <span style={{ color: 'blue', fontWeight: '700' }}>{count}</span>
       </p>
     </div>
   </>
@@ -136,21 +129,23 @@ return (
 ```jsx
 // ✨ before
 
-useQuery(queryKey[0], queryFn, {...queryOption});
-useQuery(queryKey[1], queryFn, {...queryOption});
-useQuery(queryKey[2], queryFn, {...queryOption});
-useQuery(queryKey[3], queryFn, {...queryOption});
-useQuery(queryKey[4], queryFn, {...queryOption});
+useQuery(queryKey[0], queryFn, { ...queryOption })
+useQuery(queryKey[1], queryFn, { ...queryOption })
+useQuery(queryKey[2], queryFn, { ...queryOption })
+useQuery(queryKey[3], queryFn, { ...queryOption })
+useQuery(queryKey[4], queryFn, { ...queryOption })
 
 // ✨ after
 
-useQueries(queryKey.map(key => {
-  return {
-    queryKey: key,
-    queryFn: queryFn,
-    ...queryOption
-  }
-}))
+useQueries(
+  queryKey.map((key) => {
+    return {
+      queryKey: key,
+      queryFn: queryFn,
+      ...queryOption,
+    }
+  })
+)
 ```
 
 <img src="https://zubetcha-blog.s3.ap-northeast-2.amazonaws.com/2022/07/2022-07-rerender-optimization-useQueries-network.png" alt="react-query useQueries network" width="100%" />
@@ -182,11 +177,12 @@ useQueries(queryKey.map(key => {
 
 ```jsx
 useEffect(() => {
-  Promise.all(new Array(5).fill(0).map(_ => {
-    const res = MockAPI();
-    return res;
-  }))
-  .then(_ => setCount(prev => prev + 1))
+  Promise.all(
+    new Array(5).fill(0).map((_) => {
+      const res = MockAPI()
+      return res
+    })
+  ).then((_) => setCount((prev) => prev + 1))
 }, [])
 ```
 
@@ -216,20 +212,21 @@ Promise.all의 이행이 완료되면 이행 결과가 담겨 있는 리스트�
 ```jsx
 const fetcher = async () => {
   try {
-    const resultList = await  Promise.all(new Array(5).fill(0).map(_ => {
-      const res = MockAPI();
-      return res;
-    }))
+    const resultList = await Promise.all(
+      new Array(5).fill(0).map((_) => {
+        const res = MockAPI()
+        return res
+      })
+    )
 
-    return resultList;
-  }
-  catch (error) {
-    error;
+    return resultList
+  } catch (error) {
+    error
   }
 }
 
-const queryResult = useQuery("rerender-test", fetcher, {...queryOption});
-console.log(queryResult);
+const queryResult = useQuery('rerender-test', fetcher, { ...queryOption })
+console.log(queryResult)
 ```
 
 그리고 브라우저에서 확인해보니..!
@@ -325,21 +322,21 @@ export const MockAPI = {
 ```jsx
 // index.tsx
 
-import { useQueries } from "../../hooks/useQueries";
+import { useQueries } from '../../hooks/useQueries'
 
 // ...
 
 const apis = {
-  api1 : MockAPI.test1,
-  api2 : MockAPI.test2,
-  api3 : MockAPI.test1,
-  api4 : MockAPI.test2,
-  api5 : MockAPI.test1,
-};
-const queryOption = { onSuccess: () => setCount(prev  => prev + 1) };
-const params = [null, "zubetcha", null, "zubetcha", null];
+  api1: MockAPI.test1,
+  api2: MockAPI.test2,
+  api3: MockAPI.test1,
+  api4: MockAPI.test2,
+  api5: MockAPI.test1,
+}
+const queryOption = { onSuccess: () => setCount((prev) => prev + 1) }
+const params = [null, 'zubetcha', null, 'zubetcha', null]
 
-const result = useQueries("rerender", apis, queryOption, params)
+const result = useQueries('rerender', apis, queryOption, params)
 console.log(result)
 
 // ...

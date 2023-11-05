@@ -1,15 +1,10 @@
 ---
-
 title: Bottom Sheet 컴포넌트 만들기
-category: React
-date: 2022-10-23
-description: 그런데 버그를 곁들인...
-published: true
-slug: bottom-sheet
-tags: 
-  - react
-  - bottomsheet
-
+summary: 그런데 버그를 곁들인...
+date: '2022-10-23'
+draft: false
+tags: ['react', 'bottomsheet']
+images: []
 ---
 
 # 들어가면서
@@ -72,23 +67,23 @@ tags:
 - content (dom): DOM의 변화를 알기 위해 useRef 대신 useCallback으로 설정한 dom ref로, 바텀 시트의 컨텐츠 영역을 참조합니다.
 
 ```jsx
-const [expanded, setExpanded] = useState(false);
-const [scrollable, setScrollable] = useState(false);
-const [isInDOM, setIsInDOM] = useState(false);
-const [container, setContainer] = useState<HTMLDivElement | null>(null);
-const [content, setContent] = useState<HTMLDivElement | null>(null);
+const [expanded, setExpanded] = useState(false)
+const [scrollable, setScrollable] = useState(false)
+const [isInDOM, setIsInDOM] = useState(false)
+const [container, setContainer] = (useState < HTMLDivElement) | (null > null)
+const [content, setContent] = (useState < HTMLDivElement) | (null > null)
 
 const containerRef = useCallback((node) => {
   if (node !== null) {
-    setContainer(node);
+    setContainer(node)
   }
-}, []);
+}, [])
 
 const contentRef = useCallback((node) => {
   if (node !== null) {
-    setContent(node);
+    setContent(node)
   }
-}, []);
+}, [])
 ```
 
 ## Props
@@ -101,7 +96,7 @@ const contentRef = useCallback((node) => {
 - OFFSET_CONDITION (number): snap 인터랙션을 관제하는 touchmove 거리 조건
 
 ```jsx
-const OFFSET_CONDITION = 70;
+const OFFSET_CONDITION = 70
 ```
 
 ## Ref
@@ -111,20 +106,23 @@ const OFFSET_CONDITION = 70;
 - metrics (object): 터치 이벤트에 사용할 매트릭
 
 ```jsx
-const firstClientHeight = useRef(0);
-const halfVh = useRef(0);
-const metrics = useRef<BottomSheetMetrics>({
-  touchStart: {
-    containerHeight: 0,
-    touchY: 0,
-  },
-  touchMove: {
-    prevTouchY: undefined,
-    movingDirection: 'none',
-    touchOffset: 0,
-  },
-  isContentAreaTouched: false,
-});
+const firstClientHeight = useRef(0)
+const halfVh = useRef(0)
+const metrics =
+  useRef <
+  BottomSheetMetrics >
+  {
+    touchStart: {
+      containerHeight: 0,
+      touchY: 0,
+    },
+    touchMove: {
+      prevTouchY: undefined,
+      movingDirection: 'none',
+      touchOffset: 0,
+    },
+    isContentAreaTouched: false,
+  }
 ```
 
 # useBottomSheet 만들기
@@ -151,7 +149,7 @@ return <animated.div style={styles}>i will fade</animated.div>
 바텀 시트를 처음 열었다면 viewport 아래에서 DOM에 잡히고 위로 올라오도록 하기 위해 translateY의 초기값을 `100%`로 설정하고 DOM에 잡히면 api를 사용해 translateY를 `0`으로 업데이트합니다. 바텀 시트를 DOM에서 제거할 때도 마찬가지로 다시 바텀 시트의 translateY를 `100%`로 업데이트한 후 DOM에서 제거합니다.
 
 ```jsx
-import { useSpring } from 'react-spring';
+import { useSpring } from 'react-spring'
 
 const [springProps, api] = useSpring(() => ({
   y: '100%',
@@ -162,7 +160,7 @@ const [springProps, api] = useSpring(() => ({
       }
     },
   },
-}));
+}))
 ```
 
 ## 흐름 잡기
@@ -190,46 +188,46 @@ const [springProps, api] = useSpring(() => ({
   onRest: {
     y: (y) => {
       if (y.value === '100%') {
-        setIsInDOM(false);
+        setIsInDOM(false)
       }
     },
   },
-}));
+}))
 
 useEffect(() => {
   if (open) {
-    setIsInDOM(true);
+    setIsInDOM(true)
   } else if (!open) {
-    api.start({ y: '100%' });
+    api.start({ y: '100%' })
   }
-}, [open]);
+}, [open])
 
 useEffect(() => {
   if (isInDOM && container) {
     // DOM에 잡힌 BottomSheet의 높이가 50vh 이상인 경우 content 영역에 스크롤이 있다고 판단
     if (container.clientHeight >= halfVh.current) {
-      setScrollable(true);
+      setScrollable(true)
     }
     // BottomSheet의 overlay 영역 스크롤 막기
-    document.body.style.setProperty('overflow', 'hidden');
+    document.body.style.setProperty('overflow', 'hidden')
     // expanded false이고 BottomSheet를 움직인 거리가 snap 조건에 미달하여 원래 높이로 다시 돌아가야 하는 경우 사용할 높이
-    firstClientHeight.current = container.clientHeight;
-    api.start({ y: '0' });
+    firstClientHeight.current = container.clientHeight
+    api.start({ y: '0' })
   }
 
   if (!isInDOM) {
-    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('overflow')
   }
-}, [isInDOM]);
+}, [isInDOM])
 
 useEffect(() => {
-  const containerHeight = expanded ? halfVh.current * 2 : firstClientHeight.current;
-  const overflowY = expanded ? 'overlay' : 'hidden';
+  const containerHeight = expanded ? halfVh.current * 2 : firstClientHeight.current
+  const overflowY = expanded ? 'overlay' : 'hidden'
 
-  container?.style.setProperty('transition', 'height 0.4s ease-out');
-  container?.style.setProperty('height', `${containerHeight}px`);
-  content?.style.setProperty('overflow-y', `${overflowY}`);
-}, [expanded]);
+  container?.style.setProperty('transition', 'height 0.4s ease-out')
+  container?.style.setProperty('height', `${containerHeight}px`)
+  content?.style.setProperty('overflow-y', `${overflowY}`)
+}, [expanded])
 ```
 
 ## 50vh 값 저장하기
@@ -238,19 +236,19 @@ useEffect(() => {
 useEffect(() => {
   if (window) {
     const setVh = () => {
-      const vh = window.innerHeight * 0.01;
-      halfVh.current = vh * 50;
+      const vh = window.innerHeight * 0.01
+      halfVh.current = vh * 50
     }
 
-    window.addEventListener('resize', setVh);
-    window.addEventListener('touchend', setVh);
+    window.addEventListener('resize', setVh)
+    window.addEventListener('touchend', setVh)
 
     return () => {
-      window.removeEventListener('resize', setVh);
-      window.removeEventListener('touchend', setVh);
+      window.removeEventListener('resize', setVh)
+      window.removeEventListener('touchend', setVh)
     }
   }
-}, []);
+}, [])
 ```
 
 ## 터치 이벤트
@@ -391,15 +389,15 @@ useEffect(() => {
 ```jsx
 useEffect(() => {
   if (container) {
-    container.addEventListener('touchstart', handleTouchStart);
-    container.addEventListener('touchmove', handleTouchMove);
-    container.addEventListener('touchend', handleTouchEnd);
+    container.addEventListener('touchstart', handleTouchStart)
+    container.addEventListener('touchmove', handleTouchMove)
+    container.addEventListener('touchend', handleTouchEnd)
 
     return () => {
-      container.removeEventListener('touchstart', handleTouchStart);
-      container.removeEventListener('touchmove', handleTouchMove);
-      container.removeEventListener('touchend', handleTouchEnd);
-    };
+      container.removeEventListener('touchstart', handleTouchStart)
+      container.removeEventListener('touchmove', handleTouchMove)
+      container.removeEventListener('touchend', handleTouchEnd)
+    }
   }
 }, [container, expanded])
 ```
@@ -586,10 +584,10 @@ BottomSheetContent.displayName = "BottomSheetContent";
 `Compound` 패턴으로 컴포넌트를 만들면 모든 구성 요소들을 import할 필요 없이 메인 컴포넌트만 import해서 서브 컴포넌트 key에 접근하여 사용할 수 있다는 장점이 있습니다.
 
 ```jsx
-import { BottomSheet as BottomSheetMain } from "./BottomSheet";
-import { BottomSheetContent } from "./BottomSheetContent";
-import { BottomSheetButtons } from "./BottomSheetButtons";
-import { BottomSheetButton } from "./BottomSheetButton";
+import { BottomSheet as BottomSheetMain } from './BottomSheet'
+import { BottomSheetContent } from './BottomSheetContent'
+import { BottomSheetButtons } from './BottomSheetButtons'
+import { BottomSheetButton } from './BottomSheetButton'
 
 export const BottomSheet = Object.assign(BottomSheetMain, {
   Content: BottomSheetContent,
@@ -601,25 +599,25 @@ export const BottomSheet = Object.assign(BottomSheetMain, {
 # 결과
 
 ```jsx
-import { useState } from "react";
-import { BottomSheet } from "ui/src/pages";
+import { useState } from 'react'
+import { BottomSheet } from 'ui/src/pages'
 
 export default function BottomSheetTest() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
   return (
     <div>
       <button
         onClick={(e) => {
-          e.preventDefault();
-          setOpen(!open);
+          e.preventDefault()
+          setOpen(!open)
         }}
       >
         Bottom Sheet
       </button>
       <BottomSheet open={open} setOpen={setOpen} title="TEST">
         <BottomSheet.Content>
-          <div style={{ padding: "16px" }}>
+          <div style={{ padding: '16px' }}>
             {new Array(50).fill(0).map((el, i) => (
               <>
                 <p>안녕하세용</p>
@@ -633,7 +631,7 @@ export default function BottomSheetTest() {
         </BottomSheet.Buttons>
       </BottomSheet>
     </div>
-  );
+  )
 }
 ```
 

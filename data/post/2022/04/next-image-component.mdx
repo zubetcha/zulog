@@ -1,15 +1,10 @@
 ---
-
 title: Next의 Image 컴포넌트, 왜 사용할까?
-category: Next
-description: 알고 쓰면 더 좋은 Image 컴포넌트
-date: 2022-04-13
-published: true
-slug: next-image-component
-tags: 
-  - next
-  - optimization
-
+summary: 알고 쓰면 더 좋은 Image 컴포넌트
+date: '2022-04-13'
+draft: false
+tags: ['nextjs', 'optimization']
+images: []
 ---
 
 # 들어가면서
@@ -44,22 +39,21 @@ Next.js는 위와 같이 이미지 소스와는 별도로 추가해야 했던 �
 ```jsx
 // index.tsx
 
-import Image from "next/image";
+import Image from 'next/image'
 
 const NextImage = () => {
-
-  const imagePaths = new Array (5).fill(0).map((el, i) => i + 1);
+  const imagePaths = new Array(5).fill(0).map((el, i) => i + 1)
 
   return (
     <div>
       <h1>🌳 Image Component</h1>
-      {imagePaths.map(path => {
+      {imagePaths.map((path) => {
         return (
           <div key={path}>
-            <Image src={`/${path}.jpg`}  width="300" height="400"/>
+            <Image src={`/${path}.jpg`} width="300" height="400" />
           </div>
         )
-     })}
+      })}
     </div>
   )
 }
@@ -80,22 +74,21 @@ export default NextImage
 ```jsx
 // index.tsx
 
-import Image from "next/image";
+import Image from 'next/image'
 
 const NextImage = () => {
-
-  const imagePaths = new Array (5).fill(0).map((el, i) => i + 1);
+  const imagePaths = new Array(5).fill(0).map((el, i) => i + 1)
 
   return (
     <div>
       <h1>🌳 Image Component</h1>
-      {imagePaths.map(path => {
+      {imagePaths.map((path) => {
         return (
           <div key={path}>
             <img src={`/${path}.jpg`} alt="pet" width="300" height="400" />
           </div>
         )
-     })}
+      })}
     </div>
   )
 }
@@ -121,22 +114,21 @@ export default NextImage
 ```jsx
 // index.tsx
 
-import Image from "next/image";
+import Image from 'next/image'
 
 const NextImage = () => {
-
-  const imagePaths = new Array (5).fill(0).map((el, i) => i + 1);
+  const imagePaths = new Array(5).fill(0).map((el, i) => i + 1)
 
   return (
     <div>
       <h1>🌳 Image Component</h1>
-      {imagePaths.map(path => {
+      {imagePaths.map((path) => {
         return (
           <div key={path}>
-            <Image src={`/${path}.jpg`}  width="300" height="400"/>
+            <Image src={`/${path}.jpg`} width="300" height="400" />
           </div>
         )
-     })}
+      })}
     </div>
   )
 }

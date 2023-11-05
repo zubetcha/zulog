@@ -1,15 +1,10 @@
 ---
-
-title: '[Typescript] never 타입에 대한 고찰'
-category: Typescript
-date: 2023-04-22
-description: 
-published: true
-slug: typescript-never
-tags: 
-  - typescript
-  - never
-
+title: 'never 타입에 대한 고찰'
+summary: 특이하게 동작하는 never 타입에 대해 알아보았다.
+date: '2023-04-22'
+draft: false
+tags: ['typescript']
+images: []
 ---
 
 # 들어가며
@@ -197,7 +192,7 @@ SomeType extends OtherType ? TrueType : FalseType;
 그리고 조건부 타입에 `제네릭`을 받으면 조건부 타입이 유니온 타입으로 추론되는 독특한 방식으로 동작한다. 다음은 타입스크립트 공식문서에 있는 예제를 가져온 것이다.
 
 ```tsx
-type ToArray<Type> = Type extends any ? Type[] : never;
+type ToArray<Type> = Type extends any ? Type[] : never
 ```
 
 코드만 봤을 때는 제네릭 Type에 전달한 타입을 요소로 가지는 배열로 추론해 줄 것 같지만 실제로는 조금 다르게 동작한다. 예를 들어 Type에 string 또는 number 유니온 타입을 전달하면 아래와 같이 추론된다.
@@ -228,8 +223,8 @@ string[] | number[]
 다시 IsNever 타입 챌린지 문제로 돌아가보면,
 
 ```tsx
-type IsNever<T> = T extends never ? true : false;
-type Test = IsNever<never>;
+type IsNever<T> = T extends never ? true : false
+type Test = IsNever<never>
 ```
 
 제네릭 T로 받은 never는 빈 유니언이 된다. 빈 유니언은 또다른 유니언 타입으로 분배할 수 있는 타입이 없다. 그래서 빈 유니언은 유니언 타입으로 분배되어도 또다른 빈 유니언으로 도출될 뿐인 것이다.

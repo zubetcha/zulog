@@ -1,15 +1,10 @@
 ---
-
 title: MSW로 개발자 경험 향상시키기
-category: Etc
-date: 2022-12-13
-description: API 개발 후에 고통 받고 있다면 
-published: true
-slug: improve-DX-with-MSW
-tags: 
-  - etc
-  - MSW
-
+summary: 정말 향상이 맞을지는 아직 의문인 건 비밀
+date: '2022-12-13'
+draft: false
+tags: ['MSW']
+images: []
 ---
 
 # 들어가며
@@ -107,13 +102,15 @@ REST API용 Request handler를 작성하기 위해서는 우선 msw가 제공하
 ```jsx
 // src/mocks/handlers.ts
 
-import { rest } from 'msw';
+import { rest } from 'msw'
 
 export const handlers = () => {
   return [
-    rest.get('/api/accounts/:accountId', (req, res, ctx) => res(ctx.status(200), ctx.text('성공!'))),
-  ];
-};
+    rest.get('/api/accounts/:accountId', (req, res, ctx) =>
+      res(ctx.status(200), ctx.text('성공!'))
+    ),
+  ]
+}
 ```
 
 ### 경로에 대해서
@@ -127,7 +124,7 @@ Response resolver에서는 Request 정보들에서 각기 다른 방식으로 �
 이렇게 하면 Response resolver에서 이렇게 접근이 가능하다!
 
 ```jsx
-const { accountId } = req.params;
+const { accountId } = req.params
 ```
 
 `Request params`와 `Request body`는 경로와 상관 없이 request 객체의 또 다른 방법으로 접근할 수 있으니 Response resolver에서 자세히 다뤄보겠다.
@@ -153,10 +150,10 @@ export const responseResolver: Parameters<typeof rest.get>[1] = (req, res, ctx) 
 ```jsx
 // src/mocks/browser.ts
 
-import { setupWorker } from 'msw';
-import { handlers } from './handlers'; // Request handler들
+import { setupWorker } from 'msw'
+import { handlers } from './handlers' // Request handler들
 
-export const worker = setupWorker(...handlers());
+export const worker = setupWorker(...handlers())
 ```
 
 ## Service Worker 실행
@@ -166,13 +163,13 @@ export const worker = setupWorker(...handlers());
 ```jsx
 // src/pages/_app.tsx
 
-import { worker } from '@mocks/worker';
+import { worker } from '@mocks/worker'
 
 useEffect(() => {
   if (IS_DEVELOPMENT) {
-    worker.start();
+    worker.start()
   }
-}, []);
+}, [])
 ```
 
 ### node.js 환경에서 setupWorker를 실행할 수 없는 문제
@@ -185,26 +182,26 @@ useEffect(() => {
 
 ```jsx
 // 문제
-export const worker = () => setupWorker(...handlers());
+export const worker = () => setupWorker(...handlers())
 
 useEffect(() => {
-    if (IS_DEVELOPMENT) {
-      worker.start();
-    }
-  }, []);
+  if (IS_DEVELOPMENT) {
+    worker.start()
+  }
+}, [])
 
 // 해결
 export const worker = () => {
   if (typeof window) {
-    return setupWorker(...handlers());
+    return setupWorker(...handlers())
   }
-};
+}
 
 useEffect(() => {
-    if (IS_DEVELOPMENT) {
-      worker()?.start();
-    }
-  }, []);
+  if (IS_DEVELOPMENT) {
+    worker()?.start()
+  }
+}, [])
 ```
 
 <p align="center">
@@ -286,14 +283,14 @@ export const AccountAPI = {
 ```jsx
 // src/mocks/handlers.ts
 
-import { rest } from 'msw';
+import { rest } from 'msw'
 
 export const handlers = () => {
   return [
     /** 계정 관련 핸들러 */
     ...accountHandles,
-  ];
-};
+  ]
+}
 
 const accountHandlers = [
   /** 특정 계정 조회 */
@@ -307,7 +304,7 @@ const accountHandlers = [
 
   /** 계정 삭제 */
   rest.delete(API_ENDPOINT.account.deleteAccount, deleteAccount),
-];
+]
 ```
 
 ### Response resolver
@@ -324,9 +321,8 @@ Response resolver 함수는 아래와 같은 형태로 작성하는데, 그 중 
 
 ```jsx
 export const requestHandler = (req, res, ctx) => {
-  return res();
-};
-
+  return res()
+}
 ```
 
 **Request variables 정보 가져오기**
@@ -334,7 +330,9 @@ export const requestHandler = (req, res, ctx) => {
 만약 Request handler의 url을 `/api/accounts/:accountId`로 작성했다면, `req.params` 객체 안에 accountId라는 key 이름으로 Request variables 정보에 접근할 수 있다.
 
 ```jsx
-const {/** Request handler의 url에 작성한 키*/} = req.params;
+const {
+  /** Request handler의 url에 작성한 키*/
+} = req.params
 ```
 
 **Request body 정보 가져오기**
@@ -350,7 +348,7 @@ const { email } = await req.json<CreateAccountReq>();
 Request params에 대한 정보 또한 req 객체에서 가져올 수 있다. req.url 객체에서 searchParams는 URL API인 [URLSearchParams](https://developer.mozilla.org/ko/docs/Web/API/URLSearchParams)의 인터페이스와 동일하다.
 
 ```jsx
-const accountId = req.url.searchParams.getAll('id');
+const accountId = req.url.searchParams.getAll('id')
 ```
 
 특히 POST 메소드로 데이터를 새로 생성할 때 Request body에 있는 데이터를 그대로 Response에 사용할 수 있어 Mock API로 개발할 때 굉장히 편리했다.
