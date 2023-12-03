@@ -40,19 +40,90 @@ redux를 처음 공부할 때 serialization과 관련된 에러를 몇 번 본 �
 
 # 왜 직렬화가 필요할까?
 
-Javscript에서의 대표적인 직렬화 예시로는 브라우저에서 서버로 요청을 보낼 때 데이터를 같이 실어보내는 경우가 있다. 나는 프로그래밍을 공부하면서 ajax를 사용한 일이 거의 없었고, 대부분의 프로젝트에서는 axios를 사용했다. 그래서 request body에 데이터를 담아야 하는 경우 어떠한 처리도 없이 javascript상의 데이터 형태 그대로 담고는 했다. 그런데 axios의 공식문서를 보면 이런 설명이 있다.
+## axios의 request body 직렬화
+
+Javscript에서의 대표적인 직렬화 예시로는 브라우저에서 서버로 요청을 보낼 때 데이터를 같이 실어보내는 경우가 있다. 지금까지 프로그래밍을 공부하면서 ajax를 사용한 일이 거의 없었고, 대부분의 프로젝트에서는 axios를 사용했다. 그래서 request body에 데이터를 담아야 하는 경우 어떠한 처리도 없이 javascript상의 데이터 타입 그대로 담고는 했다. 그런데 axios의 공식문서를 보면 이런 설명이 있다.
 
 <br/>
 
 <p align="center">
-  <img src="https://github.com/zubetcha/zulog/assets/91620721/4a6108f5-93d9-4a07-8022-17d6a5793390" width="70%">
+  <img src="https://github.com/zubetcha/zulog/assets/91620721/4a6108f5-93d9-4a07-8022-17d6a5793390" width="70%" />
 </p>
+
+<br/>
 
 여기서 주목해야 할 부분은 **JSON 데이터 자동 변환** 이다.
 
-javascript에서의 직렬화 예시로 가장 자주 언급되는 게 JSON.stringify() 메서드와 JSON.parse() 메서드이다. JSON.stringify() 메서드는 자바스크립트의 객체를 json 문자열로 직렬화하는 메서드이며, JSON.parse() 메서드는 json 문자열을 자바스크립트의 객체로 역직렬화한다고 한다.
+javascript에서의 직렬화 예시로 가장 자주 언급되는 게 JSON.stringify() 메서드와 JSON.parse() 메서드이다. JSON.stringify 메서드는 자바스크립트의 객체를 json 문자열로 직렬화하는 메서드이며, JSON.parse는 json 문자열을 자바스크립트의 객체로 역직렬화하는 메서드이다.
+
+<br/>
+
+```javascript
+const obj = { a: 1 }
+
+// object > JSON
+const jsonString = JSON.stringify(obj) // "{"a": 1}"
+
+// JSON > object
+const jsonParse = JSON.parse(jsonString) // {a: 1}
+```
+
+<br/>
+
+axios는 내부적으로 XMLHttpRequest API를 사용하고 있다. XMLHttpRqeust는 send 메서드를 통해 request body를 전송할 수 있는데, 이 때 전송할 수 있는 데이터의 종류로는 Documnet, Blob, ArrayBuffer, TypesArray, DataView, FormData, URLSearchParams, string literal, object 등으로 정해져 있으며, 일부 데이터 종류는 send 메서드 내부적으로 serialization하는 동작이 내장되어 있다.
+
+그런데 axios 내부적으로도 request body로 전송하는 데이터를 JSON.stringify 메서드를 이용해 직렬화하는 로직이 들어가 있다. 아래 코드는 axios가 요청 객체를 변형시키는 함수 중 일부이다.
+
+```javascript
+// 생략
+
+if (isObjectPayload && utils.isHTMLForm(data)) {
+  data = new FormData(data)
+}
+
+if (isFormData) {
+  if (!hasJSONContentType) {
+    return data
+  }
+  return hasJSONContentType ? JSON.stringify(formDataToJSON(data)) : data
+}
+
+if (
+  utils.isArrayBuffer(data) ||
+  utils.isBuffer(data) ||
+  utils.isStream(data) ||
+  utils.isFile(data) ||
+  utils.isBlob(data)
+) {
+  return data
+}
+
+if (utils.isArrayBufferView(data)) {
+  return data.buffer
+}
+
+if (utils.isURLSearchParams(data)) {
+  headers.setContentType('application/x-www-form-urlencoded;charset=utf-8', false)
+  return data.toString()
+}
+
+if (isObjectPayload || hasJSONContentType) {
+  headers.setContentType('application/json', false)
+  return stringifySafely(data)
+}
+```
+
+<br/>
+
+코드를 보면 XMLHttpRequest의 send 메서드가 지원하는 형태이더라도 그대로 사용하는 경우와 string literal로 변형하거나 JSON으로 변형하고 있는 걸 확인할 수 있다. 지원하는 데이터 형태임에도 불구하고 변형하는 이유를 코드만으로는 알기 어렵지만 데이터를 읽는 속도 때문이 아닐까..! 라는 게 내 개인적인 추측이다. 그래서 직렬화는 왜 하는 걸까?
+
+## 프로그래밍 언어와 데이터 타입에서의 관점
+
+
 
 ### ref.
 
-참고
-[OKKY - 직렬화 하는 이유가?](https://okky.kr/questions/224715)
+참고  
+[OKKY - 직렬화 하는 이유가?](https://okky.kr/questions/224715)  
+[MDN - XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send)  
+[Fetch Spec - XMLHttpRequest BodyInit](https://fetch.spec.whatwg.org/#typedefdef-xmlhttprequestbodyinit)
