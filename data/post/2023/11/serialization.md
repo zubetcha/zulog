@@ -161,6 +161,8 @@ send(jsonProfile)
 
 > A non-serializable value was detected in an action, in the path: payload. Value: CodeMirror ...
 
+위에서 직렬화를 '전송 또는 저장이 가능한 데이터를 만드는 행위'라고 표현했었다. redux의 store 또한 의미상으로는 데이터를 저장하는 곳이다.
+
 ### ref.
 
 참고  
