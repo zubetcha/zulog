@@ -141,7 +141,7 @@ if (isObjectPayload || hasJSONContentType) {
 
 ```javascript
 // profile에 할당한 주소값은 d10이라고 가정
-const profile = { name: 'juhye', age: 100 }
+const profile = { name: 'juhye', age: 100 } // d10
 
 // d10을 서버로 전송
 send(profile)
@@ -161,7 +161,52 @@ send(jsonProfile)
 
 > A non-serializable value was detected in an action, in the path: payload. Value: CodeMirror ...
 
-위에서 직렬화를 '전송 또는 저장이 가능한 데이터를 만드는 행위'라고 표현했었다. redux의 store 또한 의미상으로는 데이터를 저장하는 곳이다.
+redux의 내부 코드를 살펴보면 dispatch로 전달하는 액션 객체에서 우리가 흔히 부르는 payload에 대한 타입을 별도로 강제하고 있지는 않고, 액션 객체의 plain object 여부와 액션 타입의 키 이름 및 타입이 string인지 정도만 체크하고 있다.
+
+```typescript
+// src/types/actions.ts
+
+export type Action<T extends string = string> = {
+  type: T
+}
+
+export interface UnknownAction extends Action {
+  [extraProps: string]: unknown
+}
+
+export interface AnyAction extends Action {
+  [extraProps: string]: any
+}
+```
+
+위에서 직렬화를 **전송 또는 저장이 가능한 데이터를 만드는 행위** 라고 표현했었다. redux의 스토어 또한 의미상으로는 데이터를 저장하는 곳이다. 단순히 스토어가 저장하는 곳이기 때문에 직렬화 가능한 데이터만 가질 수 있다고 볼 수도 있지만 redux에서는 FAQ에서 조금 더 구체적인 사유를 설명하고 있다.
+
+<br/>
+
+> ### Can I put functions, promises, or other non-serializable items in my store state?
+>
+> It is highly recommended that you only put plain serializable objects, arrays, and primitives into your store. It's _technically_ possible to insert non-serializable items into the store, but doing so can break the ability to persist and rehydrate the contents of a store, as well as interfere with time-travel debugging.  
+> If you are okay with things like persistence and time-travel debugging potentially not working as intended, then you are totally welcome to put non-serializable items into your Redux store. Ultimately, it's _your_ application, and how you implement it is up to you. As with many other things about Redux, just be sure you understand what tradeoffs are involved.
+
+<br/>
+
+위에서 봤던 것처럼 스토어에 저장할 상태의 타입을 별도로 강제하고 있지는 않기 때문에 기술적으로 non-serializable 값을 저장하는 것 자체는 가능하나 만약 그럴 경우 리덕스와 함께 사용하는 부수적인 라이브러리들의 기능을 원활하게 사용할 수 없다고 얘기하고 있다.
+
+위에서 얘기하고 있는 부수적인 라이브러리의 기능은 redux-persist나 devtools 같은 것을 의미하는데, 이들은 우리가 redux의 스토어를 사용하는 애플리케이션이 아닌 브라우저 환경을 사용하는 기능들을 제공한다. 브라우저는 애플리케이션과는 물리적으로 다른 환경일 뿐더러, 브라우저의 스토리지를 사용하는 경우 반드시 직렬화가 가능한 데이터만 사용해야 한다. 왜냐하면 직렬화한 데이터를 역직렬화하는 경우 직렬화하기 전의 원본 데이터 형태를 보장할 수 없기 때문이다.
+
+```javascript
+// non-serializable한 Date 객체
+const now = new Date() // Sat Dec 09 2023 18:44:57 GMT+0900 (한국 표준시)
+
+const jsonString = JSON.stringify(now) // '2023-12-09T09:44:57.995Z'
+
+// 역직렬화 -> Date 객체가 아닌 string
+const jsonParse = JSON.parse(jsonString) // '2023-12-09T09:44:57.995Z'
+```
+
+<br/>
+
+## Nextjs
 
 ### ref.
 
