@@ -2,7 +2,7 @@
 title: '직렬화와 역직렬화'
 summary: redux에서 만난 serialization을 nextjs에서 또 만났다.
 date: '2023-11-13'
-draft: true
+draft: false
 tags: []
 images: []
 ---
@@ -195,7 +195,7 @@ export interface AnyAction extends Action {
 위에서 얘기하고 있는 부수적인 라이브러리의 기능은 redux-persist나 devtools 같은 것을 의미하는데, 이들은 우리가 redux의 스토어를 사용하는 애플리케이션이 아닌 브라우저 환경을 사용하는 기능들을 제공한다. 브라우저는 애플리케이션과는 물리적으로 다른 환경일 뿐더러, 브라우저의 스토리지를 사용하는 경우 반드시 직렬화가 가능한 데이터만 사용해야 한다. 왜냐하면 직렬화한 데이터를 역직렬화하는 경우 직렬화하기 전의 원본 데이터 형태를 보장할 수 없기 때문이다.
 
 ```javascript
-// non-serializable한 Date 객체
+// 생성자로 만든 객체는 non-serializable한 class instance
 const now = new Date() // Sat Dec 09 2023 18:44:57 GMT+0900 (한국 표준시)
 
 const jsonString = JSON.stringify(now) // '2023-12-09T09:44:57.995Z'
@@ -208,6 +208,109 @@ const jsonParse = JSON.parse(jsonString) // '2023-12-09T09:44:57.995Z'
 
 ## Nextjs
 
+nextjs에서도 SSR을 위해 getServierSideProps를 사용하거나 SSG를 위해 getStaticProps를 사용하는 경우 종종 아래와 같은 에러 문구를 만날 때가 있다.
+
+> SerializableError: Error serializing PATH returned from METHOD in "PAGE".  
+> Reason:object ("[object Object]") cannot be serialized as JSON. Please only return JSON serializable data types.
+
+사실 풀스택 프레임워크인 nextjs에서는 non-serializable한 데이터 전달을 금지하는 이유를 더 쉽게 유추할 수 있다. server-side와 client-side는 물리적으로 다른 환경이기 때문에 server-side rendering 과정 중 서버에서 클라이언트로 데이터를 **전송**하는 행위가 필요하기 때문이다. getStaticProps 또한 hydration 과정에서 직렬화가 필요하다.
+
+nextjs에서는 아래와 같이 getStaticProps나 getServerSideProps가 반환하는 props가 직렬화가 가능한지를 확인하고 있다. 신기한 점은 null과 undefined 모두 원시값임에도 불구하고 null은 직렬화가 가능하다고 판단하고, undefined는 직렬화가 불가능하다고 판단하고 있다는 것이다.
+
+```javascript
+export function isSerializableProps(
+  page: string,
+  method: string,
+  input: any
+): true {
+  if (!isPlainObject(input)) {
+    throw new SerializableError()
+  }
+
+  function visit(visited: Map<any, string>, value: any, path: string) {
+    if (visited.has(value)) {
+      throw new SerializableError()
+    }
+
+    visited.set(value, path)
+  }
+
+  function isSerializable(
+    refs: Map<any, string>,
+    value: any,
+    path: string
+  ): true {
+    const type = typeof value
+    if (
+      value === null ||
+      type === 'boolean' ||
+      type === 'number' ||
+      type === 'string'
+    ) {
+      return true
+    }
+
+    if (type === 'undefined') {
+      throw new SerializableError()
+    }
+
+    if (isPlainObject(value)) {
+      visit(refs, value, path)
+
+      if (
+        Object.entries(value).every(([key, nestedValue]) => {
+          const nextPath = regexpPlainIdentifier.test(key)
+            ? `${path}.${key}`
+            : `${path}[${JSON.stringify(key)}]`
+
+          const newRefs = new Map(refs)
+          return (
+            isSerializable(newRefs, key, nextPath) &&
+            isSerializable(newRefs, nestedValue, nextPath)
+          )
+        })
+      ) {
+        return true
+      }
+
+      throw new SerializableError()
+    }
+
+    if (Array.isArray(value)) {
+      visit(refs, value, path)
+
+      if (
+        value.every((nestedValue, index) => {
+          const newRefs = new Map(refs)
+          return isSerializable(newRefs, nestedValue, `${path}[${index}]`)
+        })
+      ) {
+        return true
+      }
+
+      throw new SerializableError()
+    }
+
+    throw new SerializableError()
+  }
+
+  return isSerializable(new Map(), input, '')
+}
+
+```
+
+<br/>
+
+# 직렬화와 JSON 직렬화
+
+사실 자바스크립트에서 직렬화할 수 있는 타입은 여러 종류가 있다. 아래 그림처럼 원시 타입 외에도 Date, RegExp, Map, Set 객체 등도 근본적으로는 직렬화가 가능하다. 그러나 redux와 nextjs에서는 직렬화가 가능한 객체들도 직렬화가 불가능하다고 판단하고 있다. 그 기준은 JSON으로 직렬화가 가능한지 여부와 JSON.parse 메서드를 통해 역직렬화 했을 때 원본 객체를 유지할 수 있는지의 여부이다.
+
+<p align="center">
+<img width="78%" alt="" src="https://github.com/zubetcha/zulog/assets/91620721/0d89bdfa-8c75-4e3f-903b-b8433a476bf7" />
+</p>
+
+<br/>
+
 ### ref.
 
 참고  
@@ -215,4 +318,5 @@ const jsonParse = JSON.parse(jsonString) // '2023-12-09T09:44:57.995Z'
 [MDN - XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send)  
 [Fetch Spec - XMLHttpRequest BodyInit](https://fetch.spec.whatwg.org/#typedefdef-xmlhttprequestbodyinit)  
 [stack overflow - redux-toolkit-what-are-non-serializable-values-and-why-am-i-getting-an-error](https://stackoverflow.com/questions/72069145/redux-toolkit-what-are-non-serializable-values-and-why-am-i-getting-an-error)  
-[Redux - do-not-put-non-serializable-values-in-state-or-actions](https://redux.js.org/style-guide/#do-not-put-non-serializable-values-in-state-or-actions)
+[Redux - do-not-put-non-serializable-values-in-state-or-actions](https://redux.js.org/style-guide/#do-not-put-non-serializable-values-in-state-or-actions)  
+[MDN - serialization supported types](https://developer.mozilla.org/ko/docs/Web/API/Web_Workers_API/Structured_clone_algorithm#supported_types)
