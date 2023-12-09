@@ -3,7 +3,7 @@ title: '직렬화와 역직렬화'
 summary: redux에서 만난 serialization을 nextjs에서 또 만났다.
 date: '2023-11-13'
 draft: false
-tags: [serialization]
+tags: ['serialization']
 images: []
 ---
 
