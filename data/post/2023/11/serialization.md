@@ -3,7 +3,7 @@ title: '직렬화와 역직렬화'
 summary: redux에서 만난 serialization을 nextjs에서 또 만났다.
 date: '2023-11-13'
 draft: false
-tags: []
+tags: [serialization]
 images: []
 ---
 
@@ -152,6 +152,8 @@ const jsonProfile = JSON.stringify(profile)
 // 원시형 값 자체를 전송
 send(jsonProfile)
 ```
+
+<br/>
 
 # Redux와 Nextjs에서의 non-serializable value
 
