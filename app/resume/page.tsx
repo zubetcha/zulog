@@ -2,47 +2,81 @@ import React from 'react'
 // import * as _ from 'lodash'
 import { isPlainObject } from 'lodash'
 
+const contacts = [
+  [
+    { label: 'Email', value: 'zuhye5@gmail.com', href: 'zuhye5@gmail.com' },
+    { label: 'Github', value: 'https://github.com/zubetcha', href: 'https://github.com/zubetcha' },
+  ],
+  [
+    {
+      label: 'Blog',
+      value: 'https://zubetcha.com',
+      href: 'https://zubetcha.com',
+    },
+    {
+      label: 'Phone',
+      value: '010-2292-6428',
+      href: '',
+    },
+  ],
+]
+
 const Resume = () => {
   return (
-    <div>
+    <div className="flex flex-col gap-y-10 py-20">
       <p> 👷🏻‍♀️ 공사중 . . .</p>
-      <div>
-        <h1>title</h1>
-        <div>introduction</div>
-        <div>contact</div>
+      <div className="flex flex-col gap-y-5">
+        <h1 className="text-5xl font-bold">안녕하세요, 정주혜입니다.</h1>
+        <p className="text-xl">나를 소개하지.</p>
+        <div className="border-y py-3">
+          <table className="w-full">
+            {contacts.map((childContacts, i) => (
+              <tr key={`contact-table-row-${i}`}>
+                {childContacts.map(({ label, value, href }, j) => (
+                  <>
+                    <th className="w-1/6 py-1">{label}</th>
+                    <td className="w-2/6">{href ? <a href={href}>{value}</a> : value}</td>
+                  </>
+                ))}
+              </tr>
+            ))}
+          </table>
+        </div>
       </div>
-      <div>
+      <div className="flex flex-col gap-y-10">
         {dataSource.map(({ title, content }) => (
-          <div key={title}>
-            <h2>{title}</h2>
+          <div key={title} className="flex flex-col gap-y-5">
+            <h2 className="text-3xl font-extrabold">{title}</h2>
             <div>
               {content.map(({ name, period, tableData, detail }) => (
-                <div key={name}>
-                  <div>
-                    {Boolean(name) && <h3>{name}</h3>}
+                <div key={name} className="flex flex-col gap-y-5">
+                  <div className="flex justify-between">
+                    {Boolean(name) && <h3 className="text-2xl font-bold">{name}</h3>}
                     {Boolean(name) && <span>{period}</span>}
                   </div>
                   {Boolean(tableData) && (
-                    <table>
-                      <tbody>
-                        {tableData.map(({ name, children }, i) => (
-                          <tr key={`table-${name}`}>
-                            <th>{name}</th>
-                            <td>{Array.isArray(children) ? children.join(' / ') : children}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                    <div className="border-y py-3">
+                      <table className="w-full">
+                        <tbody>
+                          {tableData.map(({ name, children }, i) => (
+                            <tr key={`table-${name}`}>
+                              <th className="w-40 py-1">{name}</th>
+                              <td>{Array.isArray(children) ? children.join(' / ') : children}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   )}
                   {detail.map(({ name: detailName, children }, i) => (
-                    <div key={`detail-${i}`}>
-                      <h4>{detailName}</h4>
-                      <ul>
+                    <div key={`detail-${i}`} className="flex flex-col gap-y-2">
+                      <h4 className="text-xl font-semibold">{detailName}</h4>
+                      <ul className="list-disc pl-4">
                         {children.map((child, j) => {
                           return isPlainObject(child) && child.name ? (
-                            <li>
+                            <li className="">
                               {child.name}
-                              <ul>
+                              <ul className="list-disc pl-6">
                                 {child.children.map((c) => (
                                   <li key={`child`}>{c}</li>
                                 ))}
