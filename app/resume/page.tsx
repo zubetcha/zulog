@@ -2,6 +2,7 @@ import React from 'react'
 // import * as _ from 'lodash'
 import { isPlainObject } from 'lodash'
 
+const anchorClassName = 'font-semibold text-blue-500 underline-offset-2 hover:underline'
 const contacts = [
   [
     { label: 'Email', value: 'zuhye5@gmail.com', href: 'zuhye5@gmail.com' },
@@ -25,9 +26,12 @@ const Resume = () => {
   return (
     <div className="flex flex-col gap-y-10 py-20">
       <p> 👷🏻‍♀️ 공사중 . . .</p>
-      <div className="flex flex-col gap-y-5">
+      <div className="flex flex-col gap-y-10">
         <h1 className="text-5xl font-bold">안녕하세요, 정주혜입니다.</h1>
-        <p className="text-xl">나를 소개하지.</p>
+        <p className="text-xl">
+          DX 및 자동화
+          <br />
+        </p>
         <div className="border-y py-3">
           <table className="w-full">
             {contacts.map((childContacts, i) => (
@@ -35,7 +39,15 @@ const Resume = () => {
                 {childContacts.map(({ label, value, href }, j) => (
                   <>
                     <th className="w-1/6 py-1">{label}</th>
-                    <td className="w-2/6">{href ? <a href={href}>{value}</a> : value}</td>
+                    <td className="w-2/6">
+                      {href ? (
+                        <a href={href} target="_blank" className={anchorClassName}>
+                          {value}
+                        </a>
+                      ) : (
+                        value
+                      )}
+                    </td>
                   </>
                 ))}
               </tr>
@@ -43,17 +55,20 @@ const Resume = () => {
           </table>
         </div>
       </div>
-      <div className="flex flex-col gap-y-10">
+      <div className="flex flex-col gap-y-20">
         {dataSource.map(({ title, content }) => (
           <div key={title} className="flex flex-col gap-y-5">
             <h2 className="text-3xl font-extrabold">{title}</h2>
             <div>
               {content.map(({ name, period, tableData, detail }) => (
-                <div key={name} className="flex flex-col gap-y-5">
-                  <div className="flex justify-between">
-                    {Boolean(name) && <h3 className="text-2xl font-bold">{name}</h3>}
-                    {Boolean(name) && <span>{period}</span>}
-                  </div>
+                <div key={name} className="flex flex-col gap-y-10">
+                  {(Boolean(name) || Boolean(period)) && (
+                    <div className="flex justify-between">
+                      <h3 className="text-2xl font-bold text-blue-500">{name}</h3>
+                      <span>{period}</span>
+                    </div>
+                  )}
+
                   {Boolean(tableData) && (
                     <div className="border-y py-3">
                       <table className="w-full">
@@ -71,7 +86,7 @@ const Resume = () => {
                   {detail.map(({ name: detailName, children }, i) => (
                     <div key={`detail-${i}`} className="flex flex-col gap-y-2">
                       <h4 className="text-xl font-semibold">{detailName}</h4>
-                      <ul className="list-disc pl-4">
+                      <ul className="flex list-disc flex-col gap-y-2 pl-4">
                         {children.map((child, j) => {
                           return isPlainObject(child) && child.name ? (
                             <li className="">
@@ -85,7 +100,6 @@ const Resume = () => {
                           ) : (
                             <li>{child}</li>
                           )
-                          // console.log(child)
                         })}
                       </ul>
                     </div>
@@ -103,6 +117,32 @@ const Resume = () => {
 export default Resume
 
 const works = [
+  {
+    name: '의식주컴퍼니',
+    period: '2023.01 - 현재',
+    tableData: [
+      {
+        name: 'Teck Stack',
+        children: [
+          'React',
+          'Nextjs',
+          'typescript',
+          'redux-toolkit',
+          'styled-components',
+          'turborepo',
+          'yarn berry',
+          'storybook',
+        ],
+      },
+      { name: 'Description', children: ['백오피스', '어드민', '모노레포', '콘텐츠 에디터'] },
+    ],
+    detail: [
+      { name: '백오피스 및 어드민 개발', children: [] },
+      { name: 'Turborepo & yarn berry 기반 모노레포 구축', children: [] },
+      { name: 'php > react 마이그레이션', children: [] },
+      { name: '콘텐츠 에디터 개발', children: [] },
+    ],
+  },
   {
     name: '젠틀에너지',
     period: '2022.03 - 2023.01',
@@ -142,11 +182,26 @@ const works = [
         children: [
           <>
             react-query의 useQuery로 다수의 API 동시 호출 시 API 개수만큼 발생하는 리렌더링을 1회로
-            감소시켜 <a>렌더링 최적화</a>
+            감소시켜{' '}
+            <a
+              href="https://zubetcha.com/post/2022/07/rerendering-optimization-with-react-query-and-promise-all"
+              target="_blank"
+              className={anchorClassName}
+            >
+              렌더링 최적화
+            </a>
           </>,
           'polling 방식을 이용한 실시간 차트, 데이터 시각화 및 대시보드 개발',
           <>
-            echarts 라이브러리의 트리쉐이킹 적용을 통해 <a>번들 사이즈 최적화</a> (약 46% 감소)
+            echarts 라이브러리의 트리쉐이킹 적용을 통해{' '}
+            <a
+              href="https://zubetcha.com/post/2022/08/bundle-optimization-with-tree-shaking"
+              target="_blank"
+              className={anchorClassName}
+            >
+              번들 사이즈 최적화
+            </a>{' '}
+            (약 46% 감소)
           </>,
           '다국어 지원 기능을 개발하기 위해 사용한 next-i18next 라이브러리에서 휴먼 에러가 발생할 수 있는 가능성을 개선하기 위해 자동 완성되는 object literal을 생성해주는 유틸함수 개발',
         ],
@@ -155,7 +210,14 @@ const works = [
         name: 'Turborepo 기반 모노레포 구축',
         children: [
           <>
-            <a>공통 config 패키지화</a>를 통해 프로젝트 세팅 리소스 감소
+            <a
+              href="https://zubetcha.com/post/2022/11/monorepo-with-turborepo"
+              target="_blank"
+              className={anchorClassName}
+            >
+              공통 config 패키지화
+            </a>
+            를 통해 프로젝트 세팅 리소스 감소
           </>,
           '관심사분리, 관리 포인트 최소화 및 빌드 시간 단축을 통해 DX 향상',
         ],
@@ -173,7 +235,14 @@ const works = [
         children: [
           '엑셀 시트로 회의를 예약해야 하는 불편함을 해소하고자 자발적으로 자체 기획 및 디자인하여 개발',
           <>
-            PWA 적용 및 Firebase Cloud Messaging 서비스를 이용하여 <a>웹 푸시 알림 개발</a>
+            PWA 적용 및 Firebase Cloud Messaging 서비스를 이용하여{' '}
+            <a
+              href="https://zubetcha.com/post/2022/10/web-push-alarm-with-firebase-cloud-messaging"
+              target="_blank"
+              className={anchorClassName}
+            >
+              웹 푸시 알림 개발
+            </a>
           </>,
           'SSE 방식을 이용하여 실시간 알림 메시지 수신 기능 개발',
           '이미지 HEIC 확장자 변환 기능을 개발하여 크로스 플랫폼 지원',
@@ -190,7 +259,18 @@ const projects = [
     name: '밈글밈글',
     period: '2021.12 - 2021.01',
     tableData: [
-      { name: 'Github', children: <a>https://github.com/zubetcha/MemegleMemegle</a> },
+      {
+        name: 'Github',
+        children: (
+          <a
+            href="https://github.com/zubetcha/MemegleMemegle"
+            target="_blank"
+            className={anchorClassName}
+          >
+            https://github.com/zubetcha/MemegleMemegle
+          </a>
+        ),
+      },
       { name: 'Teck Stack', children: ['React', 'Redux', 'styled-components'] },
       {
         name: 'Description',
@@ -213,13 +293,32 @@ const activities = [
   {
     detail: [
       {
+        name: '오픈소스 개발',
+        children: [
+          {
+            name: (
+              <>
+                <a
+                  href="https://www.npmjs.com/package/monorepo-ez-script"
+                  target="_blank"
+                  className={anchorClassName}
+                >
+                  monorepo-ez-script
+                </a>{' '}
+                라이브러리 개발
+              </>
+            ),
+            children: [
+              '모노레포 환경에서 간편하게 스크립트를 선택하여 실행시켜주는 CLI 라이브러리',
+            ],
+          },
+        ],
+      },
+      {
         name: '스파르타 코딩클럽 항해99 React 튜터',
         children: [
           '스파르타 코딩클럽 항해99 (9기, 10기, 12기, 15기, 16기, 17기, 18기) (2022.09 - 현재)',
           '스파르타 코딩클럽 X ICT 이노베이션 캠프 (서울, 동북) (2022.06 - 2022.09)',
-          <>
-            수강생 대상 라이브 세션 진행 - <a>React와 Virtual DOM</a> (2022.11)
-          </>,
         ],
       },
     ],
