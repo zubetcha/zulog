@@ -15,7 +15,7 @@ images: []
 
 Enum은 타입스크립트가 제공하는 기능 중 하나이며, **열거형**이라고도 불린다. 자바스크립트에서는 지원하지 않지만 인터페이스를 보면 언뜻 자바스크립트의 object literal과도 비슷해 보인다. 또한 타입스크립트의 유니온 타입과도 비슷해 보인다.
 
-## Enum의 종류
+## Enum 종류
 
 Enum은 `enum` 키워드를 사용해 정의할 수 있다. 숫자형 enum과 문자형 enum이 있으며, 하나의 enum에 숫자와 문자열을 혼합해서 사용할 수도 있다. 혼합해서 사용하는 열거형은 **이종 열거형(heterogeneous enums)**라고도 부른다.
 
@@ -56,7 +56,7 @@ enum Device {
 }
 ```
 
-## Enum의 프로퍼티
+## Enum 프로퍼티
 
 Enum의 프로퍼티에 할당할 수 있는 값으로는 `상수` 와 `계산된(computed)` 값이 있다. 아래와 같은 값들을 할당할 수 있으며, **NaN**과 **Infinity**는 올 수 없다.
 
@@ -72,9 +72,7 @@ Enum의 프로퍼티에 할당할 수 있는 값으로는 `상수` 와 `계산�
 
 - 상수에 해당하지 않는 경우
 
-## 역매핑
-
-# Enum은 실재하는 객체?!
+# Enum은 실재하는 객체?
 
 공식문서에 따르면 enum은 런타임에 실제로 존재하는 객체이다. 따라서 값처럼 사용할 수 있다. 그래서인지 컴파일 시점의 enum 부분에 이런 설명이 있다
 
@@ -115,7 +113,76 @@ type DeviceKey2 = keyof typeof device
 
 그러나 실재하는 객체라면 상황이 달라진다. 실재하는 객체는 런타임 환경에서 얼마든지 변형이 이루어질 수 있기 때문에 컴파일 시 제거되어서는 안 된다. Enum은 타입스크립트의 기능임에도 불구하고 컴파일 시 제거되지 않기 때문에 번들 사이즈를 키울 수 있다.
 
+## 트랜스파일 및 번들링 테스트
+
+[참고한 블로그 글](https://engineering.linecorp.com/ko/blog/typescript-enum-tree-shaking)에 따르면 타입스크립트의 컴파일러는 enum을 구현하기 위해 IIFE(즉시 실행 함수)를 포함한 코드를 생성한다고 한다. 타입스크립트 플레이그라운드에서 확인해보니 위에서 선언한 enum이 아래와 같이 자바스크립트로 트랜스파일 되었다.
+
+```jsx
+enum Device {
+  IOS = 'IOS',
+  AOS = 'AOS',
+  WEB = 'WEB',
+}
+
+// transpiled
+var Device;
+(function (Device) {
+    Device["IOS"] = "IOS";
+    Device["AOS"] = "AOS";
+    Device["WEB"] = "WEB";
+})(Device || (Device = {}));
+```
+
+위의 트랜스파일한 코드를 rollup에서 번들링 해보면 아래와 같이 번들 결과가 나온다.
+
+```jsx
+// 테스트를 위해 분리해놓은 모듈들
+
+// main.js
+// TREE-SHAKING
+import { Device } from './enum.js'
+import { ios } from './tree-shaked.js'
+import { aos } from './not-tree-shaked.js'
+
+console.log(ios)
+
+// enum.js
+export var Device
+;(function (Device) {
+  Device['IOS'] = 'IOS'
+  Device['AOS'] = 'AOS'
+  Device['WEB'] = 'WEB'
+})(Device || (Device = {}))
+
+// tree-shaked.js
+export var ios = 'IOS'
+
+// not-tree-shaked.js
+export var aos = 'AOS'
+```
+
+```jsx
+// 번들 결과
+var Device
+;(function (Device) {
+  Device['IOS'] = 'IOS'
+  Device['AOS'] = 'AOS'
+  Device['WEB'] = 'WEB'
+})(Device || (Device = {}))
+
+var ios = 'IOS'
+
+// TREE-SHAKING
+
+console.log(ios)
+```
+
+export 및 import 되었지만 실제로 사용되고 있지 않은 변수인 aos는 번들 결과에 포함되지 않았지만 console.log에 사용한 ios는 번들 결과에 포함되어 있다. 여기까지는 우리가 알고 있는 트리쉐이킹의 동작이다. 그런데 enum으로 선언한 Device 또한 export 및 import는 되었지만 어디에도 사용되고 있지 않음에도 불구하고 번들 결과에 포함되어 있는 것을 확인할 수 있다.
+
+방대한 규모의 프로젝트에 일일히 선언한 enum이 사용되고 있는지 확인하는 일은 정말 비효율적이고 불필요할 것이다.
+
+## 몇 가지 대안
+
 ref.  
 [Handbook - Enums](https://www.typescriptlang.org/ko/docs/handbook/enums.html)
 [TypeScript enum을 사용하지 않는 게 좋은 이유를 Tree-shaking 관점에서 소개합니다.](https://engineering.linecorp.com/ko/blog/typescript-enum-tree-shaking)
-
