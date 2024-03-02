@@ -114,7 +114,7 @@ export default function ListLayout({
         <ul>
           {!filteredBooks.length && 'No books found.'}
           {displayBooks.map((book) => {
-            const { path, date, title, tags } = book
+            const { path, date, title, summary, tags } = book
             return (
               <li key={path} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
@@ -136,7 +136,7 @@ export default function ListLayout({
                       </div>
                     </div>
                     <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                      {/* {summary} */}
+                      {summary}
                     </div>
                   </div>
                 </article>
