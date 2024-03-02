@@ -4,19 +4,20 @@ import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
-import type { Post } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
+
+import type { Book } from 'contentlayer/generated'
 
 interface PaginationProps {
   totalPages: number
   currentPage: number
 }
 interface ListLayoutProps {
-  posts: CoreContent<Post>[]
+  books: CoreContent<Book>[]
   title: string
-  initialDisplayPosts?: CoreContent<Post>[]
+  initialDisplayBooks?: CoreContent<Book>[]
   pagination?: PaginationProps
 }
 
@@ -61,20 +62,20 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 }
 
 export default function ListLayout({
-  posts,
+  books,
   title,
-  initialDisplayPosts = [],
+  initialDisplayBooks = [],
   pagination,
 }: ListLayoutProps) {
   const [searchValue, setSearchValue] = useState('')
-  const filteredBlogPosts = posts.filter((post) => {
-    const searchContent = post.title + post.summary + post.tags?.join(' ')
+  const filteredBooks = books.filter((book) => {
+    const searchContent = book.title + book.summary + book.tags?.join(' ')
     return searchContent.toLowerCase().includes(searchValue.toLowerCase())
   })
 
-  // If initialDisplayPosts exist, display it if no searchValue is specified
-  const displayPosts =
-    initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts
+  // If initialDisplayBooks exist, display it if no searchValue is specified
+  const displayBooks =
+    initialDisplayBooks.length > 0 && !searchValue ? initialDisplayBooks : filteredBooks
 
   return (
     <>
@@ -111,9 +112,9 @@ export default function ListLayout({
           </div>
         </div>
         <ul>
-          {!filteredBlogPosts.length && 'No posts found.'}
-          {displayPosts.map((post) => {
-            const { path, date, title, summary, tags } = post
+          {!filteredBooks.length && 'No books found.'}
+          {displayBooks.map((book) => {
+            const { path, date, title, tags } = book
             return (
               <li key={path} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
@@ -135,7 +136,7 @@ export default function ListLayout({
                       </div>
                     </div>
                     <div className="prose max-w-none text-gray-500 dark:text-gray-400">
-                      {summary}
+                      {/* {summary} */}
                     </div>
                   </div>
                 </article>

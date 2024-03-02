@@ -244,4 +244,5 @@ enum의 특징만 보면 장점도 분명히 존재하는 기능이라는 생각
 
 **ref.**  
 [Handbook - Enums](https://www.typescriptlang.org/ko/docs/handbook/enums.html)  
-[TypeScript enum을 사용하지 않는 게 좋은 이유를 Tree-shaking 관점에서 소개합니다.](https://engineering.linecorp.com/ko/blog/typescript-enum-tree-shaking)
+[TypeScript enum을 사용하지 않는 게 좋은 이유를 Tree-shaking 관점에서 소개합니다.](https://engineering.linecorp.com/ko/blog/typescript-enum-tree-shaking)  
+[さようなら、TypeScript enum](https://www.kabuku.co.jp/developers/good-bye-typescript-enum)
