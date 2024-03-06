@@ -3,7 +3,7 @@ title: 2023 회고록
 summary: 부끄러운 2023년을 살았습니다.
 date: '2024-01-13'
 draft: false
-tags: ['memoir', '2023']
+tags: ['retrospective', '2023']
 images: []
 ---
 
