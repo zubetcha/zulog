@@ -45,8 +45,8 @@ php로 되어 있던 메뉴 몇 개를 react로 리팩토링하는 작업을 진
 <br/>
 
 <div style="display: flex; justify-content: space-between;">
-    <img src="https://github.com/zubetcha/zubetcha-blog/assets/91620721/81c42ff0-41b0-44bd-a7f2-0141fd144f22" alt="이미지 1" width="49%">
-    <img src="https://github.com/zubetcha/zubetcha-blog/assets/91620721/ca43130b-4d4c-49d9-b9a9-7239fb996dc3" alt="이미지 2" width="49%">
+    <img src="https://github.com/zubetcha/zubetcha-blog/assets/91620721/81c42ff0-41b0-44bd-a7f2-0141fd144f22" alt="이미지 1" width="49%" />
+    <img src="https://github.com/zubetcha/zubetcha-blog/assets/91620721/ca43130b-4d4c-49d9-b9a9-7239fb996dc3" alt="이미지 2" width="49%" />
 </div>
 
 <br/>
