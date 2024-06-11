@@ -92,3 +92,57 @@ zip과 동일한 알고리즘을 사용하나, 여러 파일을 하나로 압축
 # 3. HTTP 프로토콜
 
 ## HTTP 최적화 기술
+
+- HTTP/1.1부터 TCP/IP 연결을 재사용하는 기능 추가
+  - 연결 재사용 (persistent connection)
+  - 파이프라이닝 (pipelining)
+
+## HTTP 지속적 연결
+
+- HTTP 초기에는 3 way handshake를 통해 TCP를 연결함
+  - 안전한 통신 추구
+- 컨텐츠가 다양해지면서 매번 연결을 맺는 일이 성능에 영향을 주면서 지속적 연결의 필요성 대두
+- HTTP 지속적 연결은 클라이언트와 서버가 TCP상에서 한 번 연결되면 완전히 끊어지기 전까지는 맺어진 연결을 지속적으로 재사용하는 기술
+- HTTP 요청 헤더 중 `Connection` 헤더 이용
+  - HTTP/1.1부터는 Connection 헤더를 설정하지 않아도 기본적으로 지속적 연결 지원
+
+```jsx
+// 지속적 연결 요청
+Connection: keep - alive
+
+// 지속적 연결 종료
+Connection: close
+```
+
+## HTTP 파이프라이닝
+
+- HTTP 선입 선출(FIFO, First In First Out) 방식의 단점을 극복하기 위해 개발 시작
+- 먼저 보낸 요청의 응답이 없어도 다음 요청을 병렬적으로 전송하는 기술
+
+# 4. DNS
+
+- 인터넷 호스트명을 클라이언트와 서버가 이해할 수 있는 IP 주소로 변환해주는 시스템
+- DNS 조회 속도가 느리면 웹 사이트 로딩에 영향을 줄 수 있음
+
+## DNS 작동 원리
+
+- 하나의 DNS 서버가 아닌 도메인 계층 구조에 따라 각각의 DNS 서버들이 관여
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/13e165f9-1e12-471d-bcc5-130f4119f051/0a17717f-da17-4dbd-8dbd-7262fb533041/Untitled.png)
+
+1. 로컬 DNS 서버로 질의
+   1. 로컬 DNS: 사용자와 인접한 DNS
+   2. 이전에 동일한 도메인이 질의된 적이 있어 캐시가 남아 있다면 로컬 DNS에 캐싱하고 있는 IP 주소 반환
+2. 로컬 DNS → 루트 DNS 서버로 질의
+   1. 루트 DNS: 전체 도메인을 관장하는 DNS
+   2. [www.example.com](http://www.example.com) 도메인에 대해 질의한다면 루트 DNS는 가지고 있는 .com 도메인 서버의 IP 정보 제공
+3. 로컬 DNS → .com DNS 서버로 질의
+   1. .com DNS는 자신이 알고 있는 [example.com](http://example.com) 네임 서버의 IP 정보 제공
+4. 로컬 DNS → [example.com](http://example.com) DNS 서버로 질의
+   1. 자신이 알고 있는 [www.example.com](http://www.example.com) 네임 서버의 IP 정보 제공
+
+## 사용 중인 다양한 도메인 확인 방법
+
+- 개발자 도구 → Source 탭
+
+## 웹 성능을 최적화하는 도메인 운용 방법
