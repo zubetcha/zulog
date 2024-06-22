@@ -352,19 +352,9 @@ function loadReal(img) {
 - `User-Agent` 헤더를 통해
   - 애플리케이션, 운영체제, 제조업체 등의 정보
 
-```html
-User-Agent:
-<product>
-  /
-  <product-version>
-    <comment>
-      User-Agent: Mozilla/5.0 (<system-information
-        >)
-        <platform>
-          (<platform-details
-            >)
-            <extensions></extensions></platform-details></platform></system-information></comment></product-version
-></product>
+```text
+User-Agent: <product> / <product-version> <comment>
+User-Agent: Mozilla/5.0 (<system-information>) <platform> (<platform-details>) <extensions>
 ```
 
 - 기기의 정보를 감지하기 위해 라이브러리나 클라우드 서비스를 사용할 수 있지만 무료는 없음
@@ -385,14 +375,12 @@ User-Agent:
 
 - 브라우저별 이미지는 HTTP 요청 헤더 중 Accept 헤더를 통해 결정
 
-```html
-Accept:
-<MIME_type
-  >/<MIME_subtype>
-    Accept: text/html Accept: image/* Accept: text/html, application/xhtml+xml,
-    application/xml;q=0.9, */*;q=0.8</MIME_subtype
-  ></MIME_type
->
+```text
+Accept: <>/<>
+
+Accept: text/html
+Accept: image/*
+Accept: text/html, application/xhtml+xml, application/xml;q=0.9, */*;q=0.8
 ```
 
 <br/>
@@ -405,6 +393,6 @@ Accept:
 - 적응형 이미지는 동일한 url을 사용해도 사용자 기기에 따라 서로 다른 이미지가 응답될 수 있기 때문에 캐시 충돌 현상에 주의 필요
 - 응답 헤더 중 `Vary` 헤더를 통해 특정 헤더에 따라 컨텐츠가 달라질 수 있음을 캐시 서버에 알려줘야 함
 
-```html
-Vary: <header-name>, <header-name>, ...</header-name></header-name>
+```text
+Vary: <header-name>, <header-name>, ...
 ```
