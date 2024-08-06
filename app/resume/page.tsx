@@ -6,18 +6,18 @@ const anchorClassName = 'font-semibold text-blue-500 underline-offset-2 hover:un
 
 const Resume = () => {
   return (
-    <div className="flex flex-col gap-y-10 py-20">
-      <div className="flex flex-col gap-y-10">
-        <h1 className="text-5xl font-bold">안녕하세요, 정주혜입니다.</h1>
-        <p className="text-xl">
+    <div className="flex flex-col md:gap-y-3 md:py-2 xl:mx-20 xl:gap-y-10 xl:py-20">
+      <div className="flex flex-col md:gap-y-3 xl:gap-y-10">
+        <h1 className="font-bold md:text-3xl xl:text-5xl">안녕하세요, 정주혜입니다.</h1>
+        <p className="md:text-sm xl:text-xl">
           3년 차 웹 프론트엔드 개발자로, 비효율적인 프로세스와 사람이 하는 반복적인 일을 자동화하여
           개선하는 데 관심이 많습니다. <br />
           사내에서 자발적으로 자동화 관련 백오피스 기능 및 툴 등을 만든 경험이 있습니다. 개인적으로
           게임 내 단체 콘텐츠를 편하게 즐기기 위해 명단을 관리하는 카카오톡용 봇을 개발해 운영하고
           있습니다.
         </p>
-        <div className="border-y py-3">
-          <table className="w-full">
+        <div className="border-y md:py-1 xl:py-3">
+          <table className="w-full md:text-xs xl:text-base">
             {contacts.map((childContacts, i) => (
               <tr key={`contact-table-row-${i}`}>
                 {childContacts.map(({ label, value, href }, j) => (
@@ -39,23 +39,23 @@ const Resume = () => {
           </table>
         </div>
       </div>
-      <div className="flex flex-col gap-y-20">
+      <div className="flex flex-col md:gap-y-3 xl:gap-y-20">
         {dataSource.map(({ title, content }) => (
-          <div key={title} className="flex flex-col gap-y-10">
-            <h2 className="text-3xl font-extrabold">{title}</h2>
+          <div key={title} className="flex flex-col md:gap-y-2 xl:gap-y-10">
+            <h2 className="font-extrabold md:text-xl xl:text-3xl">{title}</h2>
 
             {content.map(({ name, period, tableData, detail }) => (
-              <div key={name} className="flex flex-col gap-y-10">
+              <div key={name} className="flex flex-col md:gap-y-2 xl:gap-y-10">
                 {(Boolean(name) || Boolean(period)) && (
                   <div className="flex justify-between">
-                    <h3 className="text-2xl font-bold text-blue-500">{name}</h3>
+                    <h3 className="font-bold text-blue-500  md:text-lg xl:text-2xl">{name}</h3>
                     <span>{period}</span>
                   </div>
                 )}
 
                 {Boolean(tableData) && (
-                  <div className="border-y py-3">
-                    <table className="w-full">
+                  <div className="border-y md:py-1 xl:py-3">
+                    <table className="w-full md:text-xs xl:text-base">
                       <tbody>
                         {tableData.map(({ name, children }, i) => (
                           <tr key={`table-${name}`}>
@@ -69,8 +69,8 @@ const Resume = () => {
                 )}
                 {detail.map(({ name: detailName, children }, i) => (
                   <div key={`detail-${i}`} className="flex flex-col gap-y-2">
-                    <h4 className="text-xl font-semibold">{detailName}</h4>
-                    <ul className="flex list-disc flex-col gap-y-2 pl-4">
+                    <h4 className="font-semibold md:text-base xl:text-xl">{detailName}</h4>
+                    <ul className="flex list-disc flex-col gap-y-2 pl-4 md:text-xs xl:text-base">
                       {children.map((child, j) => {
                         return isPlainObject(child) && child.name ? (
                           <li className="">
