@@ -115,7 +115,32 @@ slow()
 
 추가적인 코멘트로, 가능하면 delete 연산자는 사용하지 않고 ES6의 Map/Set을 사용하는 것을 권장하고 있다. delete 연산자는 V8 엔진이 더 많은 검사를 수행하도록 하고, 빠른 경로에서 벗어나는 경우도 생길 수 있기 때문에 다양한 상황에서 속도 저하가 일어날 수 있다고 한다!
 
-> 프로퍼티 삭제가 빈번하게 일어날 수 있는 경우에는 Map/Set을 사용하도록 하자🙂
+> 프로퍼티 삭제가 빈번하게 일어날 수 있는 경우에는 `Map/Set`을 사용하도록 하자🙂
+
+<br/>
+
+## 객체 주입 공격 문제
+
+Object Literal의 두 번째 문제점은 프로퍼티 보안(?)에 취약하다는 것이다.
+
+보통 객체의 프로퍼티나 메서드에 접근할 때 `점(.)`이나 `대괄호([])`를 사용한다. 이러한 접근 방식은 아래와 같은 문제들을 야기할 수 있다고 한다.
+
+### 1. 객체의 모든 프로퍼티에 접근이 가능하다.
+
+```javascript
+exampleClass[userInput[0]] = userInput[1]
+```
+
+만약 exampleClass의 userInput[0] 키에 민감한 정보가 할당되어 있었다 하더라도 위의 코드로 인해 값인 수정될 것이다.
+
+### 2. 프로토타입의 프로퍼티를 포함한 모든 프로퍼티에 접근이 가능하다.
+
+```javascript
+userInput = ['constructor', '{}']
+exampleClass[userInput[0]] = userInput[1]
+```
+
+### 3.
 
 <br/>
 
@@ -124,3 +149,9 @@ slow()
 # hashmap
 
 # 마치며.
+
+ref.
+
+- [https://stackoverflow.com/questions/43594092/slow-delete-of-object-properties-in-js-in-v8](https://stackoverflow.com/questions/43594092/slow-delete-of-object-properties-in-js-in-v8)
+- [https://github.com/eslint-community/eslint-plugin-security/blob/main/docs/the-dangers-of-square-bracket-notation.md](https://github.com/eslint-community/eslint-plugin-security/blob/main/docs/the-dangers-of-square-bracket-notation.md)
+-
