@@ -2,7 +2,7 @@
 title: '[이펙티브 타입스크립트] 1장. 타입스크립트 알아보기'
 summary:
 date: '2024-05-15'
-draft: true
+draft: false
 tags: ['book', 'typescript']
 images: []
 ---
