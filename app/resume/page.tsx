@@ -11,7 +11,7 @@ const Resume = () => {
         <h1 className="font-bold md:text-3xl xl:text-5xl">안녕하세요, 정주혜입니다.</h1>
         <p className="md:text-sm xl:text-xl">
           3년 차 웹 프론트엔드 개발자로, 비효율적인 프로세스와 사람이 하는 반복적인 일을 자동화하여
-          개선하는 데 관심이 많습니다. <br />
+          리소스를 개선하는 데 관심이 많습니다. <br />
           사내에서 자발적으로 자동화 관련 백오피스 기능 및 툴 등을 만든 경험이 있습니다. 개인적으로
           게임 내 단체 콘텐츠를 편하게 즐기기 위해 명단을 관리하는 카카오톡용 봇을 개발해 운영하고
           있습니다.
@@ -317,41 +317,6 @@ const projects = [
         children: [
           '초기화 명령어를 통해 모노레포 내 패키지 이름과 각 패키지의 스크립트 정보 수집하여 JSON 형식의 config 파일 생성',
           '실행 명령어를 입력하면 config 파일에서 패키지와 스크립트 이름을 불러와 터미널에 select 형태로 노출 및 선택 완료하면 해당 패키지의 스크립트를 자동으로 실행',
-        ],
-      },
-    ],
-  },
-  {
-    name: '카카오톡 챗봇 개발',
-    period: '2024',
-    tableData: [
-      {
-        name: 'Github',
-        children: (
-          <a
-            href="https://github.com/zubetcha/seed-bot"
-            target="_blank"
-            className={anchorClassName}
-          >
-            https://github.com/zubetcha/seed-bot
-          </a>
-        ),
-      },
-      { name: 'Teck Stack', children: ['Express', 'Supabase', 'Koyeb'] },
-      {
-        name: 'Description',
-        children:
-          '토이프로젝트 | 게임 내 단체 콘텐츠 참여 인원 명단을 채팅 명령어로 관리할 수 있는 메신저 봇',
-      },
-    ],
-    detail: [
-      {
-        name: '상세 내용',
-        children: [
-          '채팅 명령어를 통해 콘텐츠 명단을 생성, 수정 삭제하고 참여할 수 있는 기능 개발',
-          '명단 관리에 필요한 postgreSQL 기반의 데이터베이스 테이블 구조 설계',
-          '채팅 명령어 인터페이스 설계',
-          '각 명령어에 상응하는 명단 및 참여 인원 CRUD API 개발',
         ],
       },
     ],
