@@ -7,8 +7,8 @@ type Props = {
 function Section({ children, title, isLast = false }: Props) {
   return (
     <>
-      <section className="">
-        <h2 className="mb-6 text-2xl font-black text-black">
+      <section>
+        <h2 className="mb-6 text-2xl font-black">
           {title}
           <span className="text-4xl text-rose-300">.</span>
         </h2>

@@ -5,10 +5,11 @@ function WorkExperience() {
     <Section title="Work Experience">
       {/* 의식주컴퍼니 */}
       <div className="mb-8">
-        <h3 className="mb-2 text-xl font-bold">
-          의식주컴퍼니{' '}
+        <div className="mb-2 flex items-end gap-2">
+          <h3 className="text-xl font-bold">의식주컴퍼니 </h3>
           <span className="text-base font-normal text-gray-500">(2023. 01 ~ 재직중)</span>
-        </h3>
+        </div>
+
         <p className="mb-4 leading-relaxed">
           세탁 공장 및 운송 시스템을 기반으로 비대면 세탁 서비스를 제공합니다.
         </p>
@@ -37,14 +38,14 @@ function WorkExperience() {
           <h4 className="mb-2 text-lg font-semibold">런드리고 어드민 개발</h4>
           <ul className="list-disc space-y-2 pl-5">
             <li>
-              공장 및 운송 시스템, 그룹웨어 등 세탁 서비스 운영에 필요한 모든 어드민 고도화 작업에
-              참여
+              공장 및 운송 시스템, 그룹웨어 등 B2C 고객향 서비스 운영에 필요한 모든 어드민 고도화
+              작업에 참여
             </li>
             <li>공장 내 세탁물 식별 및 공정 트래킹을 위한 RFID 도입 기술 지원</li>
             <li>
               공장에서 화면 터치 시 API가 중복 호출되는 이슈를 해결하기 위해 일정 시간 동안 여러번
-              호출된 동일한 요청을 1회로 간주하도록 throttling을 활용하여 axios interceptor 로직
-              개발
+              호출된 동일한 요청을 1회로 간주하도록 <span className="font-bold">throttling</span>을
+              활용하여 axios interceptor 로직 개선
             </li>
           </ul>
         </div>
@@ -55,7 +56,7 @@ function WorkExperience() {
               PHP 기반 프로젝트들을 React 18버전으로 점진적 마이그레이션 진행
             </li>
             <li>
-              Yarn berry와 Turborepo를 도입하여{' '}
+              Yarn berry와 Turborepo를 활용하여{' '}
               <span className="font-bold">프론트엔드 모노레포</span> 환경 구축
               <ul className="mt-2 list-disc space-y-2 pl-5">
                 <li>
@@ -111,10 +112,10 @@ function WorkExperience() {
 
       {/* 젠틀에너지 */}
       <div className="mb-8">
-        <h3 className="mb-2 text-xl font-bold">
-          젠틀에너지{' '}
+        <div className="mb-2 flex items-end gap-2">
+          <h3 className="text-xl font-bold">젠틀에너지</h3>
           <span className="text-base font-normal text-gray-500">(2022. 03 ~ 2023. 01)</span>
-        </h3>
+        </div>
         <p className="mb-4 leading-relaxed">
           실시간으로 공장의 전력 사용량을 측정하여 대시보드를 통해 인사이트를 제공하는 B2B 솔루션을
           제공합니다.
