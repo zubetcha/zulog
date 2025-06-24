@@ -4,17 +4,17 @@ function WorkExperience() {
   return (
     <Section title="Work Experience">
       {/* 의식주컴퍼니 */}
-      <div className="mb-8">
+      <div className="mb-10">
         <div className="mb-2 flex items-end gap-2">
-          <h3 className="text-xl font-bold">의식주컴퍼니 </h3>
+          <h3 className="text-2xl font-bold">의식주컴퍼니 </h3>
           <span className="text-base font-normal text-gray-500">(2023. 01 ~ 재직중)</span>
         </div>
 
-        <p className="mb-4 leading-relaxed">
+        <p className="mb-5 leading-relaxed">
           세탁 공장 및 운송 시스템을 기반으로 비대면 세탁 서비스를 제공합니다.
         </p>
-        <div className="mb-4">
-          <h4 className="mb-2 text-lg font-semibold">런드리고 앱 웹뷰 개발</h4>
+        <div className="mb-6">
+          <h4 className="mb-2 text-lg font-bold">런드리고 앱 웹뷰 개발</h4>
           <ul className="list-disc space-y-2 pl-5">
             <li>
               스토어, 가격표, 세탁비 계산, 런드리고X 요금제 페이지 및 복잡한 인터랙션이 필요한
@@ -34,8 +34,8 @@ function WorkExperience() {
             </li>
           </ul>
         </div>
-        <div className="mb-4">
-          <h4 className="mb-2 text-lg font-semibold">런드리고 어드민 개발</h4>
+        <div className="mb-6">
+          <h4 className="mb-2 text-lg font-bold">런드리고 어드민 개발</h4>
           <ul className="list-disc space-y-2 pl-5">
             <li>
               공장 및 운송 시스템, 그룹웨어 등 B2C 고객향 서비스 운영에 필요한 모든 어드민 고도화
@@ -49,8 +49,8 @@ function WorkExperience() {
             </li>
           </ul>
         </div>
-        <div className="mb-4">
-          <h4 className="mb-2 text-lg font-semibold">프론트엔드 개발 환경 모던화</h4>
+        <div className="mb-6">
+          <h4 className="mb-2 text-lg font-bold">프론트엔드 개발 환경 모던화</h4>
           <ul className="list-disc space-y-2 pl-5">
             <li className="leading-relaxed">
               PHP 기반 프로젝트들을 React 18버전으로 점진적 마이그레이션 진행
@@ -84,8 +84,8 @@ function WorkExperience() {
             <li>런드리고 디자인 시스템(LDS) 기반 컴포넌트 설계 및 개발 주도적 진행</li>
           </ul>
         </div>
-        <div className="mb-4">
-          <h4 className="mb-2 text-lg font-semibold">데이터 분석을 위한 마케팅 기술 지원</h4>
+        <div className="mb-6">
+          <h4 className="mb-2 text-lg font-bold">데이터 분석을 위한 마케팅 기술 지원</h4>
           <ul className="list-disc space-y-2 pl-5">
             <li className="leading-relaxed">
               유저 행동 패턴을 분석하고 비즈니스 인사이트를 제공하기 위해 Amplitude, braze 등 유저{' '}
@@ -113,15 +113,15 @@ function WorkExperience() {
       {/* 젠틀에너지 */}
       <div className="mb-8">
         <div className="mb-2 flex items-end gap-2">
-          <h3 className="text-xl font-bold">젠틀에너지</h3>
+          <h3 className="text-2xl font-bold">젠틀에너지</h3>
           <span className="text-base font-normal text-gray-500">(2022. 03 ~ 2023. 01)</span>
         </div>
         <p className="mb-4 leading-relaxed">
           실시간으로 공장의 전력 사용량을 측정하여 대시보드를 통해 인사이트를 제공하는 B2B 솔루션을
           제공합니다.
         </p>
-        <div className="mb-4">
-          <h4 className="mb-2 text-lg font-semibold">실시간 차트 대시보드 개발</h4>
+        <div className="mb-6">
+          <h4 className="mb-2 text-lg font-bold">실시간 차트 대시보드 개발</h4>
           <ul className="list-disc space-y-2 pl-5">
             <li className="leading-relaxed">
               빠른 PoC 구현을 위해 <span className="font-bold">polling</span> 방식을 이용하여 실시간
@@ -138,8 +138,8 @@ function WorkExperience() {
             </li>
           </ul>
         </div>
-        <div>
-          <h4 className="mb-2 text-lg font-semibold">사내 회의실 예약 관리 백오피스 개발</h4>
+        <div className="mb-6">
+          <h4 className="mb-2 text-lg font-bold">사내 회의실 예약 관리 백오피스 개발</h4>
           <ul className="list-disc space-y-2 pl-5">
             <li className="leading-relaxed">
               프로젝트 리드를 담당하여 일정 관리 및 유관부서와의 커뮤니케이션 주도

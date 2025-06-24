@@ -6,7 +6,7 @@ function Project() {
       {/* 서비스 이름 미정 */}
       <div className="mb-8">
         <div className="mb-2 flex items-end gap-2">
-          <h3 className="text-xl font-bold">미정</h3>
+          <h3 className="text-xl font-bold">à deux</h3>
           <span className="text-base font-normal text-gray-500">(2025.04 ~)</span>
         </div>
         <div className="mb-3 text-gray-500">토이 프로젝트</div>
@@ -19,8 +19,8 @@ function Project() {
           </div>
         </div>
         <div className="mb-4">
-          <strong className="font-semibold">기술 스택</strong> Typescript / Nextjs / TailwindCSS /
-          Zustand / Tanstack-query / Supabase
+          <strong className="mr-5 font-semibold">기술 스택</strong> Typescript / Nextjs /
+          TailwindCSS / Zustand / Tanstack-query / Supabase
         </div>
         <div className="mb-4">
           <ul className="list-disc space-y-2 pl-5">
@@ -50,7 +50,8 @@ function Project() {
           </div>
         </div>
         <div className="mb-4">
-          <strong className="font-semibold">기술 스택</strong> React / Redux / Styled-Components
+          <strong className="ㅎfont-semibold mr-5">기술 스택</strong> React / Redux /
+          Styled-Components
         </div>
         <div className="mb-4">
           <ul className="list-disc space-y-2 pl-5">

@@ -14,7 +14,7 @@ function Section({ children, title, isLast = false }: Props) {
         </h2>
         {children}
       </section>
-      {!isLast && <div className="my-6 h-[1px] w-full bg-gray-200" />}
+      {!isLast && <div className="my-6 h-[1px] w-full bg-gray-300" />}
     </>
   )
 }
