@@ -10,7 +10,7 @@ import Etc from '@/components/resume/Etc'
 
 const Resume = () => {
   return (
-    <div className="mx-auto max-w-[768px] py-[60px] font-sans text-gray-700">
+    <div className="mx-auto max-w-[1024px] py-[60px] font-sans text-gray-700">
       <Header />
       <Introduce />
       <Skill />
