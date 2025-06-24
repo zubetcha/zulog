@@ -5,7 +5,7 @@ function Header() {
     <header className="mb-10">
       <div className="flex justify-between gap-5">
         <div>
-          <h1 className="text-3xl font-bold leading-10">
+          <h1 className="text-3xl font-extrabold leading-10">
             안녕하세요.
             <br />
             프론트엔드 개발자

@@ -15,7 +15,7 @@ function WorkExperience() {
         </p>
         <div className="mb-6">
           <h4 className="mb-2 text-lg font-bold">런드리고 앱 웹뷰 개발</h4>
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-1.5 pl-5">
             <li>
               스토어, 가격표, 세탁비 계산, 런드리고X 요금제 페이지 및 복잡한 인터랙션이 필요한
               프로모션 랜딩페이지 등 개발
@@ -36,7 +36,7 @@ function WorkExperience() {
         </div>
         <div className="mb-6">
           <h4 className="mb-2 text-lg font-bold">런드리고 어드민 개발</h4>
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-1.5 pl-5">
             <li>
               공장 및 운송 시스템, 그룹웨어 등 B2C 고객향 서비스 운영에 필요한 모든 어드민 고도화
               작업에 참여
@@ -51,14 +51,14 @@ function WorkExperience() {
         </div>
         <div className="mb-6">
           <h4 className="mb-2 text-lg font-bold">프론트엔드 개발 환경 모던화</h4>
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-1.5 pl-5">
             <li className="leading-relaxed">
               PHP 기반 프로젝트들을 React 18버전으로 점진적 마이그레이션 진행
             </li>
             <li>
               Yarn berry와 Turborepo를 활용하여{' '}
               <span className="font-bold">프론트엔드 모노레포</span> 환경 구축
-              <ul className="mt-2 list-disc space-y-2 pl-5">
+              <ul className="mt-2 list-disc space-y-1.5 pl-5">
                 <li>
                   <span className="font-bold">공통 인터페이스와 모듈</span>을 패키지화하여 코드 중복
                   제거 및 개발자 경험 개선
@@ -86,7 +86,7 @@ function WorkExperience() {
         </div>
         <div className="mb-6">
           <h4 className="mb-2 text-lg font-bold">데이터 분석을 위한 마케팅 기술 지원</h4>
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-1.5 pl-5">
             <li className="leading-relaxed">
               유저 행동 패턴을 분석하고 비즈니스 인사이트를 제공하기 위해 Amplitude, braze 등 유저{' '}
               <span className="font-bold">CRM 툴</span> 기술 이식 업무 지원
@@ -95,7 +95,7 @@ function WorkExperience() {
               마케터가 직접 랜딩페이지를 제작할 수 있는{' '}
               <span className="font-bold">웹 기반 에디터</span>
               개발
-              <ul className="mt-2 list-disc space-y-2 pl-5">
+              <ul className="mt-2 list-disc space-y-1.5 pl-5">
                 <li className="leading-relaxed">
                   이미지 첨부, 드래그 앤 드롭을 통한 순서 변경, CTA 버튼 삽입 및 딥링크 연결,
                   Amplitude 로깅 등 에디터에 필요한 기능 자체적으로 기획 및 개발
@@ -122,7 +122,7 @@ function WorkExperience() {
         </p>
         <div className="mb-6">
           <h4 className="mb-2 text-lg font-bold">실시간 차트 대시보드 개발</h4>
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-1.5 pl-5">
             <li className="leading-relaxed">
               빠른 PoC 구현을 위해 <span className="font-bold">polling</span> 방식을 이용하여 실시간
               차트 개발
@@ -140,7 +140,7 @@ function WorkExperience() {
         </div>
         <div className="mb-6">
           <h4 className="mb-2 text-lg font-bold">사내 회의실 예약 관리 백오피스 개발</h4>
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-1.5 pl-5">
             <li className="leading-relaxed">
               프로젝트 리드를 담당하여 일정 관리 및 유관부서와의 커뮤니케이션 주도
             </li>

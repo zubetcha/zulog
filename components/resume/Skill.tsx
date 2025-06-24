@@ -3,7 +3,7 @@ import Section from '@/components/resume/common/Section'
 function Skill() {
   return (
     <Section title="Skills">
-      <ul className="list-disc space-y-2 pl-5">
+      <ul className="list-disc space-y-1.5 pl-5">
         <li className="leading-relaxed">
           React, Nextjs 등 <span className="font-bold">Javascript</span> 언어 기반의 기술들을 주로
           사용해왔습니다.

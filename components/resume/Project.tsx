@@ -23,7 +23,7 @@ function Project() {
           TailwindCSS / Zustand / Tanstack-query / Supabase
         </div>
         <div className="mb-4">
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-1.5 pl-5">
             <li className="leading-relaxed">생성형 AI를 활용한 청첩장 커스텀 기능 개발</li>
           </ul>
         </div>
@@ -54,7 +54,7 @@ function Project() {
           Styled-Components
         </div>
         <div className="mb-4">
-          <ul className="list-disc space-y-2 pl-5">
+          <ul className="list-disc space-y-1.5 pl-5">
             <li className="leading-relaxed">
               서버와 클라이언트 사이에서 주고받는 데이터를 보호하기 위해 AWS의 Certificate Manager를
               이용하여 <span className="font-bold">HTTPS</span> 도입

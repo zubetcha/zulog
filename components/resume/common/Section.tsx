@@ -8,13 +8,13 @@ function Section({ children, title, isLast = false }: Props) {
   return (
     <>
       <section>
-        <h2 className="mb-6 text-2xl font-black">
-          {title}
-          <span className="text-4xl text-rose-300">.</span>
-        </h2>
+        <div className="relative w-fit">
+          <span className="absolute -right-3 -top-3 text-4xl text-indigo-400">•</span>
+          <h2 className="mb-6 text-3xl font-black tracking-tight">{title}</h2>
+        </div>
         {children}
       </section>
-      {!isLast && <div className="my-6 h-[1px] w-full bg-gray-300" />}
+      {!isLast && <div className="my-8 h-[1px] w-full bg-gray-300" />}
     </>
   )
 }
