@@ -14,7 +14,7 @@ function Project() {
         <div className="mb-3">
           <div>
             <a
-              href="https://avec-toi.vercel.app/"
+              href="https://avec-toi.vercel.app/create"
               target="_blank"
               className="text-blue-600 hover:underline"
             >
