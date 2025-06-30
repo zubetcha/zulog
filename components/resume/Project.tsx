@@ -3,28 +3,45 @@ import Section from '@/components/resume/common/Section'
 function Project() {
   return (
     <Section title="Project">
-      {/* 서비스 이름 미정 */}
+      {/* avec toi */}
       <div className="mb-8">
         <div className="mb-2 flex items-end gap-2">
-          <h3 className="text-xl font-bold">à deux</h3>
-          <span className="text-base font-normal text-gray-500">(2025.04 ~)</span>
+          <h3 className="text-xl font-bold">avec toi</h3>
+          <span className="text-base font-normal text-gray-500">(2025.06 ~ 진행중)</span>
         </div>
         <div className="mb-3 text-gray-500">토이 프로젝트</div>
-        <div className="mb-3">모바일 청첩장을 커스텀하여 제작할 수 있는 서비스를 제공합니다.</div>
+        <div className="mb-3">모바일 청첩장을 커스텀하여 제작할 수 있는 서비스입니다.</div>
         <div className="mb-3">
           <div>
-            <a href="https://github.com/zubetcha/not-yet" className="text-blue-600 hover:underline">
-              🔗 GitHub: https://github.com/zubetcha/not-yet
+            <a
+              href="https://avec-toi.vercel.app/"
+              target="_blank"
+              className="text-blue-600 hover:underline"
+            >
+              🔗 Service: https://avec-toi.vercel.app/
+            </a>
+            <a
+              href="https://github.com/zubetcha/avec-toi"
+              target="_blank"
+              className="text-blue-600 hover:underline"
+            >
+              🔗 GitHub: https://github.com/zubetcha/avec-toi
             </a>
           </div>
         </div>
         <div className="mb-4">
           <strong className="mr-5 font-semibold">기술 스택</strong> Typescript / Nextjs /
-          TailwindCSS / Zustand / Tanstack-query / Supabase
+          TailwindCSS / Shadcn-ui / Zustand / Tanstack-query / Supabase
         </div>
         <div className="mb-4">
           <ul className="list-disc space-y-1.5 pl-5">
-            <li className="leading-relaxed">생성형 AI를 활용한 청첩장 커스텀 기능 개발</li>
+            <li className="leading-relaxed">
+              AI와 함께 서비스 방향을 논의하여 최소한의 MVP 기능 설정
+            </li>
+            <li>
+              청첩장에 필요한 정보를 다루는 하나의 거대한 상태와 prop으로 전달 받는 구조로 인해
+              불필요한 리렌더링이 발생하여 zustand 채택 및 적용
+            </li>
           </ul>
         </div>
       </div>
@@ -37,12 +54,13 @@ function Project() {
         </div>
         <div className="mb-3 text-gray-500">FE 3명 / BE 2명</div>
         <div className="mb-3">
-          신조어와 최신 밈을 즐길 수 있는 신조어 오픈 사전 및 커뮤니티 서비스를 제공합니다.
+          신조어와 최신 밈을 즐길 수 있는 신조어 오픈 사전 및 커뮤니티 서비스입니다.
         </div>
         <div className="mb-3">
           <div>
             <a
               href="https://github.com/Team8-Project/front"
+              target="_blank"
               className="text-blue-600 hover:underline"
             >
               🔗 GitHub: https://github.com/Team8-Project/front
@@ -51,7 +69,7 @@ function Project() {
         </div>
         <div className="mb-4">
           <strong className="ㅎfont-semibold mr-5">기술 스택</strong> React / Redux /
-          Styled-Components
+          Styled-Components / Github Actions
         </div>
         <div className="mb-4">
           <ul className="list-disc space-y-1.5 pl-5">

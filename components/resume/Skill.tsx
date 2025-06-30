@@ -22,7 +22,7 @@ function Skill() {
           익숙합니다.
         </li>
         <li className="leading-relaxed">
-          최근에는 주로 Nextjs 기반의 <span className="font-bold">웹뷰 개발</span>에 참여했으며,
+          최근에는 주로 Nextjs 기반의 <span className="font-bold">Webview 개발</span>에 참여했으며,
           네이티브 앱과의 통신에 대해서 이해하고 있습니다.
         </li>
         <li className="leading-relaxed">

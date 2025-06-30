@@ -20,19 +20,19 @@ function Header() {
           </div>
           <div className="flex items-center gap-3 border-b border-gray-300 pb-2">
             <span className="min-w-[100px] font-bold">Blog</span>
-            <a href="https://ttaenim.tistory.com/" className="hover:underline">
+            <a href="https://zubetcha.com" target="_blank" className="hover:underline">
               https://zubetcha.com
             </a>
           </div>
           <div className="flex items-center gap-3 border-b border-gray-300 pb-2">
             <span className="min-w-[100px] font-bold">GitHub</span>
-            <a href="https://github.com/ttaenim" className="hover:underline">
+            <a href="https://github.com/zubetcha" target="_blank" className="hover:underline">
               https://github.com/zubetcha
             </a>
           </div>
           <div className="flex items-center gap-3 border-b border-gray-300 pb-2">
             <span className="min-w-[100px] font-bold">E-Mail</span>
-            <a href="mailto:ttrrr121@gmail.com" className="hover:underline">
+            <a href="mailto:zuhye5@gmail.com" target="_blank" className="hover:underline">
               zuhye5@gmail.com
             </a>
           </div>

@@ -17,7 +17,7 @@ function WorkExperience() {
           <h4 className="mb-2 text-lg font-bold">런드리고 앱 웹뷰 개발</h4>
           <ul className="list-disc space-y-1.5 pl-5">
             <li>
-              스토어, 가격표, 세탁비 계산, 런드리고X 요금제 페이지 및 복잡한 인터랙션이 필요한
+              스토어, 가격표, 세탁비 계산, 요금제 등 정보 제공성 페이지 및 복잡한 인터랙션이 필요한
               프로모션 랜딩페이지 등 개발
             </li>
             <li className="leading-relaxed">
@@ -31,6 +31,10 @@ function WorkExperience() {
             <li>
               성능 개선을 통한 사용자 경험 향상을 위해{' '}
               <span className="font-bold">lottie 애니메이션</span> 제안 및 적용
+            </li>
+            <li>
+              인증 관련 커맨드, Amplitude 로깅 등 페이지마다 중복되는 로직을 커스텀훅으로 분리하여
+              재사용성을 제고하고 유지보수 용이성 개선
             </li>
           </ul>
         </div>
