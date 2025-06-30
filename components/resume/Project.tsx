@@ -20,6 +20,8 @@ function Project() {
             >
               🔗 Service: https://avec-toi.vercel.app/
             </a>
+          </div>
+          <div>
             <a
               href="https://github.com/zubetcha/avec-toi"
               target="_blank"

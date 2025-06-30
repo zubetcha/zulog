@@ -6,7 +6,7 @@ function OtherExperience() {
       <ul className="space-y-6">
         <li>
           <div className="mb-2 text-lg font-bold">오픈소스 개발</div>
-          <div className="text-gray-500">
+          <div className="mb-3 text-gray-500">
             모노레포 구조에서 패키지 이름과 스크립트를 타이핑하지 않고 select 방식으로 실행할 수
             있는 CLI 라이브러리
           </div>
